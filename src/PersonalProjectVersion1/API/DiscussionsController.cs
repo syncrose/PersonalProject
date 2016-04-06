@@ -3,34 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
-using PersonalProjectVersion1.Models;
+using PersonalProjectVersion1.Services;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PersonalProjectVersion1.API
 {
     [Route("api/[controller]")]
-    public class PostsController : Controller
+    public class DiscussionsController : Controller
     {
-        ApplicationDbContext _db;
+        IDiscussionService _repo;
 
-        public PostsController(ApplicationDbContext db)
+        public DiscussionsController(IDiscussionService repo)
         {
-            this._db = db;
+            this._repo = repo;
         }
 
         // GET: api/values
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-            
-        //}
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_repo.GetDiscussions());
+        }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            return Ok(_repo.GetDiscussion(id));
         }
 
         // POST api/values
@@ -49,9 +49,6 @@ namespace PersonalProjectVersion1.API
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            //TESTING FOR SOURCE
-
-            
         }
     }
 }

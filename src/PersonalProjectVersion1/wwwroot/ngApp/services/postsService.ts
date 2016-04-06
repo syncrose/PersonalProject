@@ -4,7 +4,7 @@
         private postsResource;
 
         constructor(private $resource: ng.resource.IResourceService) {
-            this.postsResource = $resource
+            
         }
 
 

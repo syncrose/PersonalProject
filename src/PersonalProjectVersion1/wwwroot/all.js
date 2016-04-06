@@ -28,8 +28,8 @@ var MyApp;
             controllerAs: 'controller'
         })
             .state('messages', {
-            url: '/discussion/postTitle/:id',
-            templateUrl: 'ngApp/views/about.html',
+            url: '/discussion/post/:id',
+            templateUrl: 'ngApp/views/forumPostMessageBoard.html',
             controller: MyApp.Controllers.ViewMessagesController,
             controllerAs: 'controller'
         })
@@ -54,13 +54,13 @@ var MyApp;
                 }
             },
             url: ''
-        })
-            .state('notFound', {
-            url: '/notFound',
-            templateUrl: 'ngApp/views/notFound.html'
         });
+        //.state('notFound', {
+        //    url: '/notFound',
+        //    templateUrl: 'ngApp/views/notFound.html'
+        //});
         // Handle request for non-existent route
-        $urlRouterProvider.otherwise('/notFound');
+        //$urlRouterProvider.otherwise('/notFound');
         // Enable HTML5 navigation
         $locationProvider.html5Mode(true);
     });
@@ -83,8 +83,15 @@ var MyApp;
     var Controllers;
     (function (Controllers) {
         var DiscussionController = (function () {
-            function DiscussionController() {
+            function DiscussionController(discussionService, $stateParams) {
+                this.discussionService = discussionService;
+                this.$stateParams = $stateParams;
+                this.getDiscussion();
             }
+            DiscussionController.prototype.getDiscussion = function () {
+                var discId = this.$stateParams['id'];
+                this.discussion = this.discussionService.getDiscussion(discId);
+            };
             return DiscussionController;
         }());
         Controllers.DiscussionController = DiscussionController;
@@ -249,6 +256,9 @@ var MyApp;
             DiscussionService.prototype.getDiscussions = function () {
                 return this.discussionResource.query();
             };
+            DiscussionService.prototype.getDiscussion = function (id) {
+                return this.discussionResource.get({ id: id });
+            };
             return DiscussionService;
         }());
         Services.DiscussionService = DiscussionService;
@@ -275,7 +285,6 @@ var MyApp;
         var PostsService = (function () {
             function PostsService($resource) {
                 this.$resource = $resource;
-                this.postsResource = $resource;
             }
             return PostsService;
         }());

@@ -2,13 +2,18 @@
 
     export class DiscussionController {
         public discussion;
-        public posts;
+        public post;
 
         constructor(
-            private disucussionService: MyApp.Services.DiscussionService,
-            private $stateParams: ng.ui.IStateParamsService,
-            private 
-         )
+            private discussionService: MyApp.Services.DiscussionService,
+            private $stateParams: ng.ui.IStateParamsService) {
+            this.getDiscussion();
+        }
+
+        getDiscussion() {
+            let discId = this.$stateParams['id'];
+            this.discussion = this.discussionService.getDiscussion(discId);
+        }
 
     }
 }

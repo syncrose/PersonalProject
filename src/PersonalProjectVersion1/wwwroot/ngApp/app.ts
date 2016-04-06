@@ -32,8 +32,8 @@ namespace MyApp {
                 controllerAs: 'controller'
             })
             .state('messages', {
-                url: '/discussion/postTitle/:id',
-                templateUrl: 'ngApp/views/about.html',
+                url: '/discussion/post/:id',
+                templateUrl: 'ngApp/views/forumPostMessageBoard.html',
                 controller: MyApp.Controllers.ViewMessagesController,
                 controllerAs: 'controller'
             })
@@ -58,15 +58,15 @@ namespace MyApp {
                     }
                 },
                 url: ''
-            })
+            });
 
-        .state('notFound', {
-            url: '/notFound',
-            templateUrl: 'ngApp/views/notFound.html'
-        });
+        //.state('notFound', {
+        //    url: '/notFound',
+        //    templateUrl: 'ngApp/views/notFound.html'
+        //});
 
         // Handle request for non-existent route
-        $urlRouterProvider.otherwise('/notFound');
+        //$urlRouterProvider.otherwise('/notFound');
 
         // Enable HTML5 navigation
         $locationProvider.html5Mode(true);

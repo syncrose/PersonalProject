@@ -11,6 +11,10 @@
             return this.discussionResource.query();
         }
 
+        getDiscussion(id) {
+            return this.discussionResource.get({ id: id });
+        }
+
 
     }
 
