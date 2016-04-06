@@ -7,5 +7,7 @@ namespace PersonalProjectVersion1.Services
     {
         Discussion GetDiscussion(int Id);
         List<Discussion> GetDiscussions();
+        void AddDisc(Discussion discussion);
+        void UpDisc(Discussion discussion);
     }
 }

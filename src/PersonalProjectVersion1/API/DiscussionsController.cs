@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using PersonalProjectVersion1.Services;
+using PersonalProjectVersion1.Models;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,8 +36,16 @@ namespace PersonalProjectVersion1.API
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]Discussion discussion)
         {
+            if(discussion.Id == 0)
+            {
+                _repo.AddDisc(discussion);
+            } else
+            {
+                _repo.UpDisc(discussion);
+            }
+            return Ok(discussion);
         }
 
         // PUT api/values/5

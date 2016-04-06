@@ -21,6 +21,12 @@ var MyApp;
             controller: MyApp.Controllers.MainDiscussionPageController,
             controllerAs: 'controller'
         })
+            .state('newDiscussion', {
+            url: '/createDiscussion',
+            templateUrl: 'ngApp/views/createDiscussion.html',
+            controller: MyApp.Controllers.CreateDiscussionController,
+            controllerAs: 'controller'
+        })
             .state('discussions', {
             url: '/discussion/:id',
             templateUrl: 'ngApp/views/discussionPage.html',
@@ -68,6 +74,83 @@ var MyApp;
 /// <reference path="ngapp/app.ts" />
 var MyApp;
 (function (MyApp) {
+    var Services;
+    (function (Services) {
+        var DiscussionService = (function () {
+            function DiscussionService($resource) {
+                this.$resource = $resource;
+                this.discussionResource = this.$resource("/api/discussions/:id");
+            }
+            DiscussionService.prototype.getDiscussions = function () {
+                return this.discussionResource.query();
+            };
+            DiscussionService.prototype.getDiscussion = function (id) {
+                return this.discussionResource.get({ id: id });
+            };
+            DiscussionService.prototype.saveDiscussion = function (discToSave) {
+                return this.discussionResource.save(discToSave).$promise;
+            };
+            return DiscussionService;
+        }());
+        Services.DiscussionService = DiscussionService;
+        angular.module("MyApp").service("discussionService", DiscussionService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var HikingPostsService = (function () {
+            function HikingPostsService() {
+            }
+            return HikingPostsService;
+        }());
+        Services.HikingPostsService = HikingPostsService;
+        angular.module("MyApp").service("hikingPostsService", HikingPostsService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var PostsService = (function () {
+            function PostsService($resource) {
+                this.$resource = $resource;
+            }
+            return PostsService;
+        }());
+        Services.PostsService = PostsService;
+        angular.module("MyApp").service("postsService", PostsService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var SportsService = (function () {
+            function SportsService() {
+            }
+            return SportsService;
+        }());
+        Services.SportsService = SportsService;
+        angular.module("MyApp").service("sportsService", SportsService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var StargazingService = (function () {
+            function StargazingService() {
+            }
+            return StargazingService;
+        }());
+        Services.StargazingService = StargazingService;
+        angular.module("MyApp").service("stargazingService", StargazingService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
     var Controllers;
     (function (Controllers) {
         var AboutController = (function () {
@@ -76,6 +159,26 @@ var MyApp;
             return AboutController;
         }());
         Controllers.AboutController = AboutController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var CreateDiscussionController = (function () {
+            function CreateDiscussionController(discussionService, $state) {
+                this.discussionService = discussionService;
+                this.$state = $state;
+            }
+            CreateDiscussionController.prototype.saveNewDisc = function () {
+                var _this = this;
+                this.discussionService.saveDiscussion(this.discToCreate).then(function () {
+                    _this.$state.go('discussion');
+                });
+            };
+            return CreateDiscussionController;
+        }());
+        Controllers.CreateDiscussionController = CreateDiscussionController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
 })(MyApp || (MyApp = {}));
 var MyApp;
@@ -91,6 +194,9 @@ var MyApp;
             DiscussionController.prototype.getDiscussion = function () {
                 var discId = this.$stateParams['id'];
                 this.discussion = this.discussionService.getDiscussion(discId);
+            };
+            DiscussionController.prototype.saveDiscussion = function () {
+                this;
             };
             return DiscussionController;
         }());
@@ -243,79 +349,5 @@ var MyApp;
         }());
         Controllers.ViewMessagesController = ViewMessagesController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var DiscussionService = (function () {
-            function DiscussionService($resource) {
-                this.$resource = $resource;
-                this.discussionResource = this.$resource("/api/discussions/:id");
-            }
-            DiscussionService.prototype.getDiscussions = function () {
-                return this.discussionResource.query();
-            };
-            DiscussionService.prototype.getDiscussion = function (id) {
-                return this.discussionResource.get({ id: id });
-            };
-            return DiscussionService;
-        }());
-        Services.DiscussionService = DiscussionService;
-        angular.module("MyApp").service("discussionService", DiscussionService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var HikingPostsService = (function () {
-            function HikingPostsService() {
-            }
-            return HikingPostsService;
-        }());
-        Services.HikingPostsService = HikingPostsService;
-        angular.module("MyApp").service("hikingPostsService", HikingPostsService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var PostsService = (function () {
-            function PostsService($resource) {
-                this.$resource = $resource;
-            }
-            return PostsService;
-        }());
-        Services.PostsService = PostsService;
-        angular.module("MyApp").service("postsService", PostsService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var SportsService = (function () {
-            function SportsService() {
-            }
-            return SportsService;
-        }());
-        Services.SportsService = SportsService;
-        angular.module("MyApp").service("sportsService", SportsService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var StargazingService = (function () {
-            function StargazingService() {
-            }
-            return StargazingService;
-        }());
-        Services.StargazingService = StargazingService;
-        angular.module("MyApp").service("stargazingService", StargazingService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
 })(MyApp || (MyApp = {}));
 //# sourceMappingURL=all.js.map

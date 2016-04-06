@@ -33,7 +33,13 @@ namespace PersonalProjectVersion1.Services
         public void AddDisc(Discussion discussion)
         {
             _repo.Add(discussion);
+            
 
+        }
+
+        public void UpDisc(Discussion discussion)
+        {
+            _repo.Update(discussion);
         }
     }
 }

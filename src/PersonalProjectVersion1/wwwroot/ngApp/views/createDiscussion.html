@@ -1,0 +1,36 @@
+﻿
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h1>Create a new interest discussion topic!</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3" id="createDisc">
+        <form ng-submit="controller.saveNewDisc()">
+            <div class="form-group">
+                <label>Interest/Topic Title</label>
+                <input type="text" class="form-control" ng-model="controller.discToCreate.interestName" />
+            </div>
+            <div class="form-group">
+                <label>Give this topic a brief description.</label>
+                <input type="text" class="form-control" ng-model="controller.discToCreate.description" />
+            </div>
+            <div class="form-group">
+                <!-- Add this to the image to show them -->
+                <label>This will be the discussions catchy headline!</label>
+                <input type="text" class="form-control" ng-model="controller.discToCreate.headline" />
+            </div>
+            <div class="form-group">
+                <!-- ADD IT SO THEY CAN SEE WHAT IT WILL LOOK LIKE -->
+                <label>Give it a cool image headline. Add a link!</label>
+                <input type="text" class="form-control" ng-model="controller.discToCreate.imageHeader" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" />
+            </div>
+
+        </form>
+    </div>
+</div>

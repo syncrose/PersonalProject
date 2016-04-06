@@ -25,6 +25,12 @@ namespace MyApp {
                 controller: MyApp.Controllers.MainDiscussionPageController,
                 controllerAs: 'controller'
             })
+            .state('newDiscussion', {
+                url: '/createDiscussion',
+                templateUrl: 'ngApp/views/createDiscussion.html',
+                controller: MyApp.Controllers.CreateDiscussionController,
+                controllerAs: 'controller'
+            })
             .state('discussions', {
                 url: '/discussion/:id',
                 templateUrl: 'ngApp/views/discussionPage.html',

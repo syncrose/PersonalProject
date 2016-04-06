@@ -15,6 +15,10 @@
             return this.discussionResource.get({ id: id });
         }
 
+        saveDiscussion(discToSave) {
+            return this.discussionResource.save(discToSave).$promise;
+        }
+
 
     }
 
