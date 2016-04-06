@@ -1,0 +1,76 @@
+﻿<div class="container-fluid">
+    <div class="col-sm-3 pull-left"><h1>Joeuser</h1></div>
+
+    <!-- NESTED VIEWS FOR DISCUSSION FORUM AND EVENTS  -->
+    <div class="col-lg-9 pull-right" id="profileContainer">
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Dropdown
+                <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+                <li ng-click="controller.getHikingPosts()">Hiking Page</li>
+                <li ng-click="controller.getSportsPosts()">Stargazing Page</li>
+                <li ng-click="controller.getStarPosts()">Team Sports Page</li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/">Home</a></li>
+            </ul>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-9">
+                    <div ui-view="discussion"></div>
+                </div>
+                <div class="col-md-3">
+                    <div ui-view="events"> </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- END NESTED VIEW FOR DISCUSSION FORUM AND EVENTS -->
+    <div class="col-sm-3">
+        <a href="/users" class="pull-left"><img title="profile image" class="img-responsive" src="http://funnystack.com/wp-content/uploads/2014/04/Funny-Monkey-321.jpg"></a><br />
+        <ul id="profileDetails" class="pull-left">
+            <li class="list-group-item glyphicon glyphicon-user">SYNCROSE</li>
+            <li class="list-group-item glyphicon glyphicon-envelope">SYNCROSE@gmail.com</li>
+            <li class="list-group-item glyphicon glyphicon-globe">Seattle, WA</li>
+            <li class="list-group-item glyphicon glyphicon-cog">LINK TO USER SETTINGS</li>
+
+        </ul>
+
+    </div>
+
+
+    <div class="col-sm-3 pull-left">
+        <!--left col-->
+
+     
+    
+        <div class="panel panel-default pull-left">
+            <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
+            <div class="panel-body"><a href="http://bootply.com">bootply.com</a></div>
+        </div>
+
+
+        <ul class="list-group">
+            <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
+        </ul>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Social Media</div>
+            <div class="panel-body">
+                <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
+            </div>
+        </div>
+
+    </div><!--/col-3-->
+
+</div>

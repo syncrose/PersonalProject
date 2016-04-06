@@ -1,0 +1,501 @@
+﻿#indexBody {
+    
+    background-image: url(https://s-media-cache-ak0.pinimg.com/originals/34/7c/0a/347c0ae41c1480fcc92fe3445b96bd81.jpg);
+    background-size: cover;
+    
+    background-repeat: no-repeat;
+    padding-bottom: 275px;
+    font-family: Crete Round;
+    /*margin: 0px;
+    padding: 0px;
+    border: 14px solid #808080;
+    width:100%; height:100%*/
+
+}
+
+#MainNav {
+    height: 75px;
+   
+}
+
+#logoImage {
+    margin-top: -30px;
+}
+
+.navbar navbar-fixed-top navbar-inverse, ul li button {
+    margin-top: 15px;
+    margin-right: 15px;
+}
+
+#BodyDiv {
+    margin-top: 50px;
+}
+
+.footer {
+   position:fixed;
+bottom:0;
+text-align: center ;
+font-size: 16px ;
+font-family: verdana ;
+width:auto;
+height: 10px ;
+background-color: #f6f6f6 ;
+}
+
+#slides_control > div{
+  height: 200px;
+}
+img{
+  margin:auto;
+  width: 400px;
+}
+#slides_control {
+  position:absolute;
+  width: 400px;
+  left:50%;
+  top:20px;
+ margin-left:-200px;
+}
+
+#intro {
+    font-family: 'Damion', cursive;
+    font-size:120px;
+    text-shadow: 2px 2px #333;
+    color: rgba(255, 0, 0, 0.59);
+    padding-bottom: 150px;
+}
+
+#intro2 {
+    font-family: 'Damion', cursive;
+    font-size:60px;
+    text-shadow: 2px 2px #333;
+    color: rgba(255, 0, 0, 0.59);
+}
+
+.carousel-img{ 
+    height: 700px !important;
+    width: 3000px !important;
+    background-position:inherit;
+    margin-right:auto;
+    margin-left:auto;
+    border-radius: 10px;
+    border:double;
+    border-color: black;
+}
+
+#carouselContent {
+   
+}
+
+
+#homeBigPic {
+    margin-top: -8px;
+    margin-left: -10px;
+    background-image: url(http://sportycious.com/wp-content/uploads/2014/03/Skydiving-or-Parachuting-simplified.jpg);
+   background-size: cover;
+    height: 1200px;
+    
+}
+
+#homeSmall1 {
+    margin-top: -8px;
+    
+     background-image: url(http://hotel-gatlinburg.com/wp-content/uploads/2014/08/Group-hiking.jpg);
+   background-size: cover;
+    height:600px;
+
+    
+}
+
+
+#homeSmall2 {
+    margin-top: -8px;
+  margin-right: 10px;
+     background-image: url(http://bulk2.destructoid.com/ul/87838-ubidays-08-shaun-white-snowboarding-impressions/ShaunWhiteSnowboarding_FriendsInWilderness-468x.jpg);
+   background-size: cover;
+    height:600px;
+    
+}
+
+#homeSmall3 {
+    background-image: url(http://thatsthewayitis.net/wp-content/uploads/o-STAR-GAZING-570.jpg);
+   background-size: cover;
+    height:600px;
+    
+}
+#homeSmall4 {
+    background-image: url(http://www.prairieheights.com/wp-content/uploads/2010/04/ballpark1.jpg);
+   background-size: cover;
+    height:600px;
+    
+}
+
+#loginModal {
+    background-image: url(http://visitadirondacks.com/files/styles/600x325/public/tupper-lake-adirondacks-scenic-drives.jpg?itok=JN9DDmfE);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#loginModalContent {
+   font-size: 18px;
+    background-color: black;
+    opacity: .9;
+    height: 600px;
+    color: white;
+
+}
+
+#signUpButton {
+    top:40px;
+
+
+      height: 100px;
+    width: 200px;
+    font-size: 25px;
+    margin: 2px;
+}
+#signUpModal {
+    background-image: url(http://visitadirondacks.com/files/styles/600x325/public/tupper-lake-adirondacks-scenic-drives.jpg?itok=JN9DDmfE);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#signUpModalContent {
+    font-size: 18px;
+     background-color: black;
+    opacity: .9;
+    height: 600px;
+    color: white;
+   
+    
+}
+
+.modal-header {
+    
+    height: 100px;
+}
+
+.modal-body {
+    top: 50px;
+    height: 350px;
+    
+}
+
+.modal-footer {
+    height: 75px;
+
+}
+
+
+
+.forum.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.forum .fa {
+    width: 1em;
+    text-align: center;
+}
+
+.forum.table th.cell-stat {
+    width: 6em;
+}
+
+.forum.table th.cell-stat-2x {
+    width: 14em;
+}
+
+
+    
+.homeC {
+    margin-top: -15px;
+}
+
+#profileTable {
+    background-color: aquamarine;
+    opacity: .8;
+}
+
+#profileContainer {
+    
+}
+
+#profileDetails li {
+    background-color: transparent;
+    border: none;
+    font-size: 25px;
+    color: black;
+}
+
+#mainBodyDiv {
+
+    padding-bottom: 100px;
+    width: 100%;
+    
+}
+
+
+#dropdownMenu1 {
+    margin-top: 20px;
+    height: 50px;
+    width: 125px;
+ 
+}
+
+#overflowTest {
+    overflow: auto;
+}
+/* CSS FOR CUSTOM FORUM PAGE!*/
+
+#masthead {
+  min-height:199px;
+}
+
+#masthead h1 {
+  font-size: 55px;
+  line-height: 1;
+  margin-top:50px;
+}
+
+#masthead .well {
+  margin-top:31px;
+  min-height:127px;
+}
+
+.navbar.affix {
+  position:fixed;
+  top:0;
+  width:100%;
+}
+
+.story-img {
+  margin-top:25%;
+  display:block;
+}
+
+a,a:hover {
+  color:#223344;
+  text-decoration:none;
+}
+
+.icon-bar {
+  background-color:#fff;
+}
+
+@media screen and (min-width: 768px) {
+  #masthead h1 {
+    font-size: 80px;
+  }
+}
+
+.dropdown-menu {
+  min-width: 250px;
+}
+
+.panel {
+  border-color:transparent;
+  border-radius:0;
+}
+
+.thumbnail {
+  margin-bottom:8px;
+}
+
+.img-container {
+  overflow:hidden;
+  height:170px;
+}
+
+.img-container img {
+  min-width:280px;
+  min-height:180px;
+  max-width:380px;
+  max-height:280px;
+}
+
+.txt-container {
+  overflow:hidden;
+  height:100px;
+}
+
+.panel .lead {
+  overflow:hidden;
+  height:90px;
+}
+
+.label-float{
+  margin:0 auto;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  width:100%;
+  opacity:.9;
+  padding:6px;
+  color:#fff;
+}
+    
+.btn-twitter {background-color:#4099FF;color:#fff;}
+.btn-facebook {background-color:#3B5998;color:#fff;}
+.btn-google-plus {background-color:#d34836;color:#fff;}
+
+.btn-twitter:hover {background-color:#3088FF;color:#62BBFF;}
+.btn-facebook:hover {background-color:#2A4998;color:#4C6BBA;}
+.btn-google-plus:hover {background-color:#C23836;color:#E45A58;}
+
+/* END OF FORUM CSS */
+
+
+#postContent {
+    font-size: 24px;
+
+}
+
+#hikingCover {
+    margin-right: 300px;
+    background-image: url(http://ww1.whistlerblackcomb.com/media/images/subnav/subnav31.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 1000px;
+    height: 300px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+   
+    
+}
+
+#hikingCoverText {
+    font-size: 60px;
+    color: white;
+    opacity: 1 !important;
+}
+#hikingCoverText2 {
+    font-size: 38px;
+    color: white;
+}
+
+.lead {
+    font-size: 38px;
+    opacity: 1 !important;
+}
+
+
+
+wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        margin-top: -173px;
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        margin-top: -100px;
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}

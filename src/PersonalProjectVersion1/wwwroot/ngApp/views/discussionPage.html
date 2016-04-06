@@ -1,0 +1,127 @@
+﻿<div id="forumHead">
+    <div >
+      
+            <div class="col-md-6 col-md-offset-3" id="hikingCover">
+                <h1 id="hikingCoverText">
+                    Hiking
+                </h1>
+                    <p id="hikingCoverText2">Hiking buddies, apply here!</p>
+            </div>
+           
+      
+    </div><!-- /cont -->
+
+
+</div>
+
+
+
+<div id="wrapper" class="col-md-3">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a href="#">
+                    Start Bootstrap
+                </a>
+            </li>
+            <li>
+                <a href="#">Dashboard</a>
+            </li>
+            <li>
+                <a href="#">Shortcuts</a>
+            </li>
+            <li>
+                <a href="#">Overview</a>
+            </li>
+            <li>
+               
+            </li>
+           
+            <li>
+                <a href="#">About</a>
+            </li>
+            <li>
+                <a href="#">Interests</a>
+                <div class="btn-group" uib-dropdown dropdown-append-to-body>
+                    <button id="btn-append-to-body" type="button" class="btn btn-toolbar" uib-dropdown-toggle>
+                        Interests<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
+                        <li role="menuitem"><a href="#">Hiking</a></li>
+                        <li role="menuitem"><a href="#">Sports</a></li>
+                        <li role="menuitem"><a href="#">Stargazing</a></li>
+                        <li class="divider"></li>
+                        <li role="menuitem"><a href="#">Separated link</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="#">Contact</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+    <!-- Page Content -->
+  
+</div>
+<div id="page-content-wrapper">
+    <div class="row">
+
+        <div class="col-md-8 col-md-offset-2" ng-repeat="post in controller.posts" id="postContent">
+
+            <div class="panel">
+                <div class="panel-body">
+
+
+                    <!--FORUM POSTS-->
+                    <div class="row" ng-repeat="p in post.linkedPosts">
+                        <br>
+                        <div class="col-md-2 col-sm-3 text-center">
+                            <a class="story-img" href="#"><img src="http://funnystack.com/wp-content/uploads/2014/04/Funny-Monkey-321.jpg" style="width:150px;height:150px" class="img-responsive"></a>
+                        </div>
+                        <div class="col-md-10 col-sm-9">
+                            <h2>{{p.title}}</h2><hr />
+                            <div class="row">
+                                <div class="col-xs-9">
+                                    <p id="overflowTest">
+                                        {{p.content}}
+                                    </p>
+                                    <p class="lead"><button class="btn btn-default">Read More</button></p>
+                                    <p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
+                                    <ul class="list-inline"><li><a href="#">{{p.timeCreated}}</a></li><li><a href="#"><i class="glyphicon glyphicon-comment"></i> 4 Comments</a></li></ul>
+                                </div>
+                                <div class="col-xs-3"></div>
+                            </div>
+                            <br><br>
+                        </div>
+                    </div>
+                    <hr>
+
+
+
+
+                    <a href="/" class="btn btn-primary pull-right btnNext">More <i class="glyphicon glyphicon-chevron-right"></i></a>
+
+
+                </div>
+            </div>
+
+
+
+        </div><!--/col-12-->
+
+
+</div>
+
+
+    </div>
+
+
+
+    <hr>
+
+
+
+
+

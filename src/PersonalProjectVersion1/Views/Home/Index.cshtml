@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="MyApp">
+<head>
+    <title>PersonalProjectVersion1</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Crete+Round' rel='stylesheet' type='text/css'>
+    <base href="/" />
+    <link href="~/css/customstyle.css" rel="stylesheet" />
+</head>
+<body id="indexBody" ng-controller="TestModalController as controller">
+    
+       
+           
+                <div class="navbar navbar-fixed-top navbar-inverse" id="MainNav">
+                    
+                        <a class="navbar-brand" href="/"><img src="http://www.thefitexpo.com/images/twitter_icon_rect.png" alt="Your Logo" id="logoImage"/></a>
+                            <div class="navbar-collapse collapse">
+                                <ul class="nav navbar-nav">
+                                    <li class="active">
+                                        <a href="/">Home</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="about">About</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="profile">Profile</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="discussion">Discussion</a>
+                                    </li>
+                                </ul>
+                                <ul class="nav navbar-nav pull-right">
+                                    <li>
+                                        <button class="btn btn-lg btn-success" ng-click="controller.showSignInModal()">Log In</button>
+                                    </li>
+                                    <li>
+                                        <button class="btn btn-lg btn-default" ng-click="controller.showSignUpModal()" >Sign Up</button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        
+                    </div>
+            <br />
+   
+    
+    <div class="container-fluid" id="BodyDiv">
+        <ui-view>
+
+
+        </ui-view>
+    </div >
+
+
+
+
+    <!-- Libary Files -->
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/angular/angular.min.js"></script>
+    <script src="~/lib/angular-resource/angular-resource.min.js"></script>
+    <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <!-- App Files-->
+
+    <script src="~/all.js"></script>
+
+</body>
+</html>
