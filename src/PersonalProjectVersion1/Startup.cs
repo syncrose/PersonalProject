@@ -20,7 +20,7 @@ namespace PersonalProjectVersion1
     {
         public Startup(IHostingEnvironment env)
         {
-            // Set up configuration sources.
+            // Set up configuration sources. 
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
