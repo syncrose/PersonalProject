@@ -11,7 +11,7 @@ var MyApp;
         })
             .state('about', {
             url: '/about',
-            templateUrl: 'ngApp/views/about.html',
+            templateUrl: 'ngApp/views/messageTemplate.html',
             controller: MyApp.Controllers.AboutController,
             controllerAs: 'controller'
         })
@@ -36,7 +36,7 @@ var MyApp;
             .state('messages', {
             url: '/discussion/post/:id',
             templateUrl: 'ngApp/views/forumPostMessageBoard.html',
-            controller: MyApp.Controllers.ViewMessagesController,
+            controller: MyApp.Controllers.PostController,
             controllerAs: 'controller'
         })
             .state('profile', {
@@ -72,83 +72,6 @@ var MyApp;
     });
 })(MyApp || (MyApp = {}));
 /// <reference path="ngapp/app.ts" />
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var DiscussionService = (function () {
-            function DiscussionService($resource) {
-                this.$resource = $resource;
-                this.discussionResource = this.$resource("/api/discussions/:id");
-            }
-            DiscussionService.prototype.getDiscussions = function () {
-                return this.discussionResource.query();
-            };
-            DiscussionService.prototype.getDiscussion = function (id) {
-                return this.discussionResource.get({ id: id });
-            };
-            DiscussionService.prototype.saveDiscussion = function (discToSave) {
-                return this.discussionResource.save(discToSave).$promise;
-            };
-            return DiscussionService;
-        }());
-        Services.DiscussionService = DiscussionService;
-        angular.module("MyApp").service("discussionService", DiscussionService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var HikingPostsService = (function () {
-            function HikingPostsService() {
-            }
-            return HikingPostsService;
-        }());
-        Services.HikingPostsService = HikingPostsService;
-        angular.module("MyApp").service("hikingPostsService", HikingPostsService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var PostsService = (function () {
-            function PostsService($resource) {
-                this.$resource = $resource;
-            }
-            return PostsService;
-        }());
-        Services.PostsService = PostsService;
-        angular.module("MyApp").service("postsService", PostsService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var SportsService = (function () {
-            function SportsService() {
-            }
-            return SportsService;
-        }());
-        Services.SportsService = SportsService;
-        angular.module("MyApp").service("sportsService", SportsService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var StargazingService = (function () {
-            function StargazingService() {
-            }
-            return StargazingService;
-        }());
-        Services.StargazingService = StargazingService;
-        angular.module("MyApp").service("stargazingService", StargazingService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
 var MyApp;
 (function (MyApp) {
     var Controllers;
@@ -241,6 +164,17 @@ var MyApp;
                     size: 'lg'
                 });
             };
+            TestModalController.prototype.createPost = function (x) {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/modalViews/createPostModal.html',
+                    controller: 'postModalController',
+                    controllerAs: 'controller',
+                    resolve: {
+                        x: function () { return x; },
+                    },
+                    size: 'lg'
+                });
+            };
             TestModalController.prototype.cancel = function () {
                 this.$state.go('/');
             };
@@ -304,8 +238,61 @@ var MyApp;
             return SignUpModalController;
         }());
         Controllers.SignUpModalController = SignUpModalController;
+        var MessageModalController = (function () {
+            function MessageModalController($uibModalInstance, x, $stateParams) {
+                this.$uibModalInstance = $uibModalInstance;
+                this.x = x;
+                this.$stateParams = $stateParams;
+            }
+            MessageModalController.prototype.ok = function () {
+                this.$uibModalInstance.close();
+            };
+            return MessageModalController;
+        }());
+        Controllers.MessageModalController = MessageModalController;
+        var PostModalController = (function () {
+            function PostModalController($uibModalInstance, x, $stateParams, postsService, $state) {
+                this.$uibModalInstance = $uibModalInstance;
+                this.x = x;
+                this.$stateParams = $stateParams;
+                this.postsService = postsService;
+                this.$state = $state;
+            }
+            PostModalController.prototype.ok = function () {
+                this.$uibModalInstance.close();
+            };
+            PostModalController.prototype.savePost = function () {
+                var _this = this;
+                this.postsService.savePost(this.postToCreate).then(function () {
+                    _this.$state.go('/discussion/:id');
+                });
+            };
+            return PostModalController;
+        }());
+        Controllers.PostModalController = PostModalController;
         angular.module("MyApp").controller("SignInModalController", SignInModalController);
         angular.module("MyApp").controller("SignUpModalController", SignUpModalController);
+        angular.module("MyApp").controller("postModalController", PostModalController);
+        angular.module("MyApp").controller("messageModalController", MessageModalController);
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var PostController = (function () {
+            function PostController(postsService, $stateParams) {
+                this.postsService = postsService;
+                this.$stateParams = $stateParams;
+                this.getPost();
+            }
+            PostController.prototype.getPost = function () {
+                var postId = this.$stateParams['id'];
+                this.post = this.postsService.getPost(postId);
+            };
+            return PostController;
+        }());
+        Controllers.PostController = PostController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
 })(MyApp || (MyApp = {}));
 var MyApp;
@@ -349,5 +336,89 @@ var MyApp;
         }());
         Controllers.ViewMessagesController = ViewMessagesController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var DiscussionService = (function () {
+            function DiscussionService($resource) {
+                this.$resource = $resource;
+                this.discussionResource = this.$resource("/api/discussions/:id");
+            }
+            DiscussionService.prototype.getDiscussions = function () {
+                return this.discussionResource.query();
+            };
+            DiscussionService.prototype.getDiscussion = function (id) {
+                return this.discussionResource.get({ id: id });
+            };
+            DiscussionService.prototype.saveDiscussion = function (discToSave) {
+                return this.discussionResource.save(discToSave).$promise;
+            };
+            return DiscussionService;
+        }());
+        Services.DiscussionService = DiscussionService;
+        angular.module("MyApp").service("discussionService", DiscussionService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var HikingPostsService = (function () {
+            function HikingPostsService() {
+            }
+            return HikingPostsService;
+        }());
+        Services.HikingPostsService = HikingPostsService;
+        angular.module("MyApp").service("hikingPostsService", HikingPostsService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var PostsService = (function () {
+            function PostsService($resource) {
+                this.$resource = $resource;
+                this.postsResource = this.$resource("/api/posts/:id");
+            }
+            PostsService.prototype.getPost = function (id) {
+                return this.postsResource.get({ id: id });
+            };
+            PostsService.prototype.savePost = function (postToSave) {
+                return this.postsResource.save(postToSave).$promise;
+            };
+            return PostsService;
+        }());
+        Services.PostsService = PostsService;
+        angular.module("MyApp").service("postsService", PostsService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var SportsService = (function () {
+            function SportsService() {
+            }
+            return SportsService;
+        }());
+        Services.SportsService = SportsService;
+        angular.module("MyApp").service("sportsService", SportsService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var StargazingService = (function () {
+            function StargazingService() {
+            }
+            return StargazingService;
+        }());
+        Services.StargazingService = StargazingService;
+        angular.module("MyApp").service("stargazingService", StargazingService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
 })(MyApp || (MyApp = {}));
 //# sourceMappingURL=all.js.map

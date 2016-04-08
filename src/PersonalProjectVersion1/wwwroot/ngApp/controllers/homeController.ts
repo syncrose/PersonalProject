@@ -43,6 +43,21 @@ namespace MyApp.Controllers {
 
         }
 
+        public createPost(x) {
+
+            this.$uibModal.open({
+                templateUrl: '/ngApp/views/modalViews/createPostModal.html',
+                controller: 'postModalController',
+                controllerAs: 'controller',
+                resolve: {
+                    x: () => x,
+
+                },
+                size: 'lg'
+            });
+
+        }
+
         constructor(private $uibModal: ng.ui.bootstrap.IModalService, private $stateParams: ng.ui.IStateParamsService,
             private $state: ng.ui.IStateService) {
 

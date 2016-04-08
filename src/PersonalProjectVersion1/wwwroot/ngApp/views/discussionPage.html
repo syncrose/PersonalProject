@@ -75,7 +75,7 @@
 
 
                     <!--FORUM POSTS-->
-                    <div class="row" ng-repeat="post in controller.discussion.linkedPosts">
+                    <div class="row" ng-repeat="post in controller.discussion.linkedPosts" id="forumPosts">
                         <br>
                         <div class="col-md-2 col-sm-3 text-center">
                             <a class="story-img" href="#"><img src="http://funnystack.com/wp-content/uploads/2014/04/Funny-Monkey-321.jpg" style="width:150px;height:150px" class="img-responsive"></a>
@@ -89,7 +89,7 @@
                                     </p>
                                     <p class="lead"><button class="btn btn-default">Read More</button></p>
                                     <p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
-                                    <ul class="list-inline"><li><a href="#">{{post.timeCreated}}</a></li><li><a href="/discussion/post/{{post.id}}"><i class="glyphicon glyphicon-comment"></i> 4 Comments</a></li></ul>
+                                    <ul class="list-inline"><li><a href="#">{{post.timeCreated | date: 'MM/dd/yyyy'}}</a></li><li><a href="/discussion/post/{{post.id}}"><i class="glyphicon glyphicon-comment"></i> Comments</a></li></ul>
                                 </div>
                                 <div class="col-xs-3"></div>
                             </div>
@@ -120,6 +120,8 @@
 
 
     <hr>
+
+<button class="btn btn-lg btn-default" ng-click="controller.createPost()">Sign Up</button>
 
 
 

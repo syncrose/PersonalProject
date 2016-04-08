@@ -249,6 +249,7 @@ img{
 
 #overflowTest {
     overflow: auto;
+    font-size: 26px;
 }
 /* CSS FOR CUSTOM FORUM PAGE!*/
 
@@ -352,7 +353,12 @@ a,a:hover {
 
 #postContent {
     font-size: 24px;
+    
 
+}
+
+#forumPosts {
+    background-color: lightgray
 }
 
 #hikingCover {
@@ -502,5 +508,11 @@ wrapper {
     #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0;
+        background-color: lightgray;
+    }
+  
+
+    #messageTemplate {
+        background-color: lightgray;
     }
 }

@@ -45,6 +45,7 @@ namespace PersonalProjectVersion1
             // Add framework services
             services.AddScoped<IGenericRepository, GenericRepository>();
             services.AddScoped<IDiscussionService, DiscussionService>();
+            services.AddScoped<IPostService, PostService>();
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<ApplicationDbContext>(options =>

@@ -15,7 +15,7 @@ namespace MyApp {
             })
             .state('about', {
                 url: '/about',
-                templateUrl: 'ngApp/views/about.html',
+                templateUrl: 'ngApp/views/messageTemplate.html',
                 controller: MyApp.Controllers.AboutController,
                 controllerAs: 'controller'
             })
@@ -40,7 +40,7 @@ namespace MyApp {
             .state('messages', {
                 url: '/discussion/post/:id',
                 templateUrl: 'ngApp/views/forumPostMessageBoard.html',
-                controller: MyApp.Controllers.ViewMessagesController,
+                controller: MyApp.Controllers.PostController,
                 controllerAs: 'controller'
             })
             .state('profile', {
