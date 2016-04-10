@@ -5,7 +5,7 @@ namespace PersonalProjectVersion1.Services
 {
     public interface IPostService
     {
-        void AddPost(Post post);
+        void AddPost(int id, Post post);
         Post getPost(int Id);
         List<Post> GetPosts();
         void UpdatePost(Post post);

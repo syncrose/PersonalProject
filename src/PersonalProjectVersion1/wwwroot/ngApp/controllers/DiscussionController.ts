@@ -15,9 +15,8 @@
             this.discussion = this.discussionService.getDiscussion(discId);
         }
 
-        saveDiscussion() {
-            this
-        }
+
+        
 
     }
 }

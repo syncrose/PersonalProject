@@ -35,12 +35,12 @@ namespace PersonalProjectVersion1.API
         }
 
         // POST api/values
-        [HttpPost]
-        public IActionResult Post([FromBody]Post post)
+        [HttpPost("{id}")]
+        public IActionResult Post(int id, [FromBody]Post post)
         {
             if(post.Id == 0)
             {
-                _repo.AddPost(post);
+                _repo.AddPost(id, post);
             }
             else
             {

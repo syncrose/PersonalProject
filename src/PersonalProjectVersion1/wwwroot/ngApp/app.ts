@@ -37,10 +37,22 @@ namespace MyApp {
                 controller: MyApp.Controllers.DiscussionController,
                 controllerAs: 'controller'
             })
+            .state('newPost', {
+                url: '/createPost/:id',
+                templateUrl: 'ngApp/views/createPost.html',
+                controller: MyApp.Controllers.CreatePostController,
+                controllerAs: 'controller'
+            })
             .state('messages', {
                 url: '/discussion/post/:id',
                 templateUrl: 'ngApp/views/forumPostMessageBoard.html',
                 controller: MyApp.Controllers.PostController,
+                controllerAs: 'controller'
+            })
+            .state('newMsg', {
+                url: '/createMsg/:id',
+                templateUrl: 'ngApp/views/createMessage.html',
+                controller: MyApp.Controllers.CreateMessageController,
                 controllerAs: 'controller'
             })
             .state('profile', {

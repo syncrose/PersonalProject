@@ -11,8 +11,8 @@
             return this.postsResource.get({ id: id });
         }
 
-        savePost(postToSave) {
-            return this.postsResource.save(postToSave).$promise;
+        savePost(id, postToSave) {
+            return this.postsResource.save({ id: id }, postToSave).$promise;
         }
     }
 

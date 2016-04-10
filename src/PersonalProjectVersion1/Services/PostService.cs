@@ -28,9 +28,13 @@ namespace PersonalProjectVersion1.Services
             return data;
         }
 
-        public void AddPost(Post post)
+        public void AddPost(int id, Post post)
         {
             _repo.Add(post);
+           var disc = _repo.Query<Discussion>().Where(d => d.Id == id).Include(d => d.LinkedPosts).FirstOrDefault();
+            disc.LinkedPosts.Add(post);
+            _repo.SaveChanges();
+          
         }
         public void UpdatePost(Post post)
         {

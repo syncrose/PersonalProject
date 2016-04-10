@@ -3,32 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
+using PersonalProjectVersion1.Services;
+using PersonalProjectVersion1.Models;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PersonalProjectVersion1.API
 {
     [Route("api/[controller]")]
-    public class PostController : Controller
+    public class MsgsController : Controller
     {
+        IMsgService _repo;
+
+        public MsgsController(IMsgService repo)
+        {
+            this._repo = repo;
+        }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_repo.GetMsgs());
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            return Ok(_repo.GetMsg(id));
         }
 
         // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
+        [HttpPost("{id}")]
+        public IActionResult Post(int id, [FromBody]Message msg)
         {
+            if(msg.Id == 0)
+            {
+                _repo.addMsg(id, msg);
+            }else
+            {
+                _repo.UpdateMsg(msg);
+            }
+            return Ok(msg);
         }
 
         // PUT api/values/5
