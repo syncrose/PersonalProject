@@ -263,7 +263,7 @@ var MyApp;
         var MessageService = (function () {
             function MessageService($resource) {
                 this.$resource = $resource;
-                this.msgResource = this.$resource("/api/messages/:id");
+                this.msgResource = this.$resource("/api/msgs/:id");
             }
             MessageService.prototype.getMessage = function (id) {
                 return this.msgResource.get({ id: id });

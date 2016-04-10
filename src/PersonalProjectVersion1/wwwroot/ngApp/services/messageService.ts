@@ -4,7 +4,7 @@
         private msgResource;
 
         constructor(private $resource: ng.resource.IResourceService) {
-            this.msgResource = this.$resource("/api/messages/:id");
+            this.msgResource = this.$resource("/api/msgs/:id");
         }
 
         getMessage(id) {
