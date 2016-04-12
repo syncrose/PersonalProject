@@ -40,5 +40,12 @@ namespace PersonalProjectVersion1.Services
         {
             _repo.Update(msg);
         }
+
+        public void DeleteMsg(int id)
+        {
+            var data = _repo.Query<Message>().Where(m => m.Id == id).FirstOrDefault();
+            _repo.Delete<Message>(data);
+            _repo.SaveChanges();
+        }
     }
 }

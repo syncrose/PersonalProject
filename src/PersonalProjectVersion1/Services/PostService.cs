@@ -40,5 +40,12 @@ namespace PersonalProjectVersion1.Services
         {
             _repo.Update(post);
         }
+
+        public void DeletePost(int id)
+        {
+            var data = _repo.Query<Post>().Where(p => p.Id == id).Include(p => p.LinkedMessages).FirstOrDefault();
+            _repo.Delete<Post>(data);
+            _repo.SaveChanges();
+        }
     }
 }

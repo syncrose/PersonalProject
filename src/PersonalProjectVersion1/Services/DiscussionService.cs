@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace PersonalProjectVersion1.Services
 {
     public class DiscussionService : IDiscussionService
     {
         IGenericRepository _repo;
+
 
         public DiscussionService(IGenericRepository repo)
         {
@@ -35,6 +37,14 @@ namespace PersonalProjectVersion1.Services
             _repo.Add(discussion);
             
 
+        }
+
+        public void DeleteDisc(int id)
+        {
+            var data = _repo.Query<Discussion>().Where(d => d.Id == id).Include(d => d.LinkedPosts).FirstOrDefault();
+            _repo.Delete<Discussion>(data);
+            _repo.SaveChanges();
+           
         }
 
         public void UpDisc(Discussion discussion)

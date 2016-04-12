@@ -9,5 +9,6 @@ namespace PersonalProjectVersion1.Services
         Message GetMsg(int Id);
         List<Message> GetMsgs();
         void UpdateMsg(Message msg);
+        void DeleteMsg(int id);
     }
 }

@@ -9,5 +9,6 @@ namespace PersonalProjectVersion1.Services
         Post getPost(int Id);
         List<Post> GetPosts();
         void UpdatePost(Post post);
+        void DeletePost(int id);
     }
 }

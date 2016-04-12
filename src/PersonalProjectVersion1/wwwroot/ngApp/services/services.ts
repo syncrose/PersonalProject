@@ -1,7 +1,0 @@
-namespace MyApp.Services {
-
-  
-
-
-
-}

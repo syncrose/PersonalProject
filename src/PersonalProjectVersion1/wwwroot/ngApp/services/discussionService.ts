@@ -19,6 +19,10 @@
             return this.discussionResource.save(discToSave).$promise;
         }
 
+        deleteDiscussion(id) {
+            return this.discussionResource.delete({ id: id }).$promise;
+        }
+
 
     }
 

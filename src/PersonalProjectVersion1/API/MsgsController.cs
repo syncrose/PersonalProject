@@ -57,6 +57,7 @@ namespace PersonalProjectVersion1.API
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _repo.DeleteMsg(id);
         }
     }
 }

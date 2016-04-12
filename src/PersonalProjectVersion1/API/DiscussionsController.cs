@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PersonalProjectVersion1.Repository;
 using Microsoft.AspNet.Mvc;
 using PersonalProjectVersion1.Services;
 using PersonalProjectVersion1.Models;
@@ -40,6 +41,7 @@ namespace PersonalProjectVersion1.API
         {
             if(discussion.Id == 0)
             {
+                
                 _repo.AddDisc(discussion);
             } else
             {
@@ -58,6 +60,9 @@ namespace PersonalProjectVersion1.API
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+
+            _repo.DeleteDisc(id);
+            
         }
     }
 }

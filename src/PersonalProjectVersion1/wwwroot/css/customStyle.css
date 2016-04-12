@@ -1,6 +1,6 @@
 ﻿#indexBody {
-    
-    background-image: url(https://s-media-cache-ak0.pinimg.com/originals/34/7c/0a/347c0ae41c1480fcc92fe3445b96bd81.jpg);
+    background-image: url(https://prod_membership_artifacts.s3.amazonaws.com/background/5838902-stars_001.jpg);
+    /*background-image: url(https://s-media-cache-ak0.pinimg.com/originals/34/7c/0a/347c0ae41c1480fcc92fe3445b96bd81.jpg);*/
     background-size: cover;
     
     background-repeat: no-repeat;
@@ -88,47 +88,7 @@ img{
 }
 
 
-#homeBigPic {
-    margin-top: -8px;
-    margin-left: -10px;
-    background-image: url(http://sportycious.com/wp-content/uploads/2014/03/Skydiving-or-Parachuting-simplified.jpg);
-   background-size: cover;
-    height: 1200px;
-    
-}
 
-#homeSmall1 {
-    margin-top: -8px;
-    
-     background-image: url(http://hotel-gatlinburg.com/wp-content/uploads/2014/08/Group-hiking.jpg);
-   background-size: cover;
-    height:600px;
-
-    
-}
-
-
-#homeSmall2 {
-    margin-top: -8px;
-  margin-right: 10px;
-     background-image: url(http://bulk2.destructoid.com/ul/87838-ubidays-08-shaun-white-snowboarding-impressions/ShaunWhiteSnowboarding_FriendsInWilderness-468x.jpg);
-   background-size: cover;
-    height:600px;
-    
-}
-
-#homeSmall3 {
-    background-image: url(http://thatsthewayitis.net/wp-content/uploads/o-STAR-GAZING-570.jpg);
-   background-size: cover;
-    height:600px;
-    
-}
-#homeSmall4 {
-    background-image: url(http://www.prairieheights.com/wp-content/uploads/2010/04/ballpark1.jpg);
-   background-size: cover;
-    height:600px;
-    
-}
 
 #loginModal {
     background-image: url(http://visitadirondacks.com/files/styles/600x325/public/tupper-lake-adirondacks-scenic-drives.jpg?itok=JN9DDmfE);
@@ -192,6 +152,10 @@ img{
 }
 
 
+#mainForum {
+
+    background-color: #2D689C;
+}
 
 .forum.table > tbody > tr > td {
     vertical-align: middle;
@@ -302,6 +266,15 @@ a,a:hover {
   border-color:transparent;
   border-radius:0;
 }
+.panel-body {
+  background-color: rgb(142, 127, 127);    
+  border-color:transparent;
+  border-radius:0;
+}
+
+h4 small {
+   color: black;
+}
 
 .thumbnail {
   margin-bottom:8px;
@@ -358,7 +331,8 @@ a,a:hover {
 }
 
 #forumPosts {
-    background-color: lightgray
+    background-color: rgb(142, 127, 127);
+    
 }
 
 #hikingCover {

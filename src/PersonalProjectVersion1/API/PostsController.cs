@@ -40,6 +40,7 @@ namespace PersonalProjectVersion1.API
         {
             if(post.Id == 0)
             {
+                post.TimeCreated = DateTime.Now;
                 _repo.AddPost(id, post);
             }
             else
@@ -59,9 +60,7 @@ namespace PersonalProjectVersion1.API
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            //TESTING FOR SOURCE
-
-            
+            _repo.DeletePost(id);
         }
     }
 }

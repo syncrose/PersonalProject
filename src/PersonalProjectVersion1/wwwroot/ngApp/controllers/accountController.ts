@@ -40,13 +40,20 @@
 
         public login() {
             this.accountService.login(this.loginUser).then(() => {
+                
                 this.$location.path('/');
             }).catch((results) => {
                 this.validationMessages = results;
             });
         }
 
-        constructor(private accountService: MyApp.Services.AccountService, private $location: ng.ILocationService) { }
+        public ok() {
+
+            this.$uibModalInstance.close();
+
+        }
+
+        constructor(private accountService: MyApp.Services.AccountService, private $location: ng.ILocationService, public $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance, private x, private $stateParams: ng.ui.IStateParamsService) { }
     }
 
 

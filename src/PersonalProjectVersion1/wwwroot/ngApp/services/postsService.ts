@@ -14,6 +14,10 @@
         savePost(id, postToSave) {
             return this.postsResource.save({ id: id }, postToSave).$promise;
         }
+
+        deletePost(id) {
+            return this.postsResource.delete({ id: id }).$promise;
+        }
     }
 
     angular.module("MyApp").service("postsService", PostsService);

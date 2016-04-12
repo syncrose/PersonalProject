@@ -21,6 +21,12 @@ var MyApp;
             controller: MyApp.Controllers.MainDiscussionPageController,
             controllerAs: 'controller'
         })
+            .state('discDelete', {
+            url: '/deleteDiscussion/:id',
+            templateUrl: 'ngApp/views/deleteDiscussion.html',
+            controller: MyApp.Controllers.DeleteDiscussionController,
+            controllerAs: 'controller'
+        })
             .state('newDiscussion', {
             url: '/createDiscussion',
             templateUrl: 'ngApp/views/createDiscussion.html',
@@ -37,6 +43,12 @@ var MyApp;
             url: '/createPost/:id',
             templateUrl: 'ngApp/views/createPost.html',
             controller: MyApp.Controllers.CreatePostController,
+            controllerAs: 'controller'
+        })
+            .state('postDelete', {
+            url: '/deletePost/:id',
+            templateUrl: 'ngApp/views/deletePost.html',
+            controller: MyApp.Controllers.DeletePostController,
             controllerAs: 'controller'
         })
             .state('messages', {
@@ -81,6 +93,24 @@ var MyApp;
         //$urlRouterProvider.otherwise('/notFound');
         // Enable HTML5 navigation
         $locationProvider.html5Mode(true);
+    });
+    angular.module('MyApp').factory('authInterceptor', function ($q, $window, $location) {
+        return ({
+            request: function (config) {
+                config.headers = config.headers || {};
+                config.headers['X-Requested-With'] = 'XMLHttpRequest';
+                return config;
+            },
+            responseError: function (rejection) {
+                if (rejection.status === 401 || rejection.status === 403) {
+                    $location.path('/login');
+                }
+                return $q.reject(rejection);
+            }
+        });
+    });
+    angular.module('MyApp').config(function ($httpProvider) {
+        $httpProvider.interceptors.push('authInterceptor');
     });
 })(MyApp || (MyApp = {}));
 /// <reference path="ngapp/app.ts" />
@@ -237,23 +267,13 @@ var MyApp;
             DiscussionService.prototype.saveDiscussion = function (discToSave) {
                 return this.discussionResource.save(discToSave).$promise;
             };
+            DiscussionService.prototype.deleteDiscussion = function (id) {
+                return this.discussionResource.delete({ id: id }).$promise;
+            };
             return DiscussionService;
         }());
         Services.DiscussionService = DiscussionService;
         angular.module("MyApp").service("discussionService", DiscussionService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var HikingPostsService = (function () {
-            function HikingPostsService() {
-            }
-            return HikingPostsService;
-        }());
-        Services.HikingPostsService = HikingPostsService;
-        angular.module("MyApp").service("hikingPostsService", HikingPostsService);
     })(Services = MyApp.Services || (MyApp.Services = {}));
 })(MyApp || (MyApp = {}));
 var MyApp;
@@ -270,6 +290,9 @@ var MyApp;
             };
             MessageService.prototype.saveMsg = function (id, msgToCreate) {
                 return this.msgResource.save({ id: id }, msgToCreate).$promise;
+            };
+            MessageService.prototype.deleteMsg = function (id) {
+                return this.msgResource.delete({ id: id }).$promise;
             };
             return MessageService;
         }());
@@ -292,36 +315,13 @@ var MyApp;
             PostsService.prototype.savePost = function (id, postToSave) {
                 return this.postsResource.save({ id: id }, postToSave).$promise;
             };
+            PostsService.prototype.deletePost = function (id) {
+                return this.postsResource.delete({ id: id }).$promise;
+            };
             return PostsService;
         }());
         Services.PostsService = PostsService;
         angular.module("MyApp").service("postsService", PostsService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var SportsService = (function () {
-            function SportsService() {
-            }
-            return SportsService;
-        }());
-        Services.SportsService = SportsService;
-        angular.module("MyApp").service("sportsService", SportsService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var StargazingService = (function () {
-            function StargazingService() {
-            }
-            return StargazingService;
-        }());
-        Services.StargazingService = StargazingService;
-        angular.module("MyApp").service("stargazingService", StargazingService);
     })(Services = MyApp.Services || (MyApp.Services = {}));
 })(MyApp || (MyApp = {}));
 var MyApp;
@@ -370,9 +370,12 @@ var MyApp;
         Controllers.AccountController = AccountController;
         angular.module('MyApp').controller('AccountController', AccountController);
         var LoginController = (function () {
-            function LoginController(accountService, $location) {
+            function LoginController(accountService, $location, $uibModalInstance, x, $stateParams) {
                 this.accountService = accountService;
                 this.$location = $location;
+                this.$uibModalInstance = $uibModalInstance;
+                this.x = x;
+                this.$stateParams = $stateParams;
             }
             LoginController.prototype.login = function () {
                 var _this = this;
@@ -381,6 +384,9 @@ var MyApp;
                 }).catch(function (results) {
                     _this.validationMessages = results;
                 });
+            };
+            LoginController.prototype.ok = function () {
+                this.$uibModalInstance.close();
             };
             return LoginController;
         }());
@@ -503,6 +509,24 @@ var MyApp;
             return CreatePostController;
         }());
         Controllers.CreatePostController = CreatePostController;
+        var DeleteMsgController = (function () {
+            function DeleteMsgController(messageService, $stateParams, $state) {
+                this.messageService = messageService;
+                this.$stateParams = $stateParams;
+                this.$state = $state;
+            }
+            DeleteMsgController.prototype.DeleteMsgController = function () {
+                var _this = this;
+                this.messageService.deleteMsg(this.$stateParams['id']).then(function () {
+                    _this.$state.go('messages');
+                });
+            };
+            DeleteMsgController.prototype.cancel = function () {
+                this.$state.go('messages');
+            };
+            return DeleteMsgController;
+        }());
+        Controllers.DeleteMsgController = DeleteMsgController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
 })(MyApp || (MyApp = {}));
 var MyApp;
@@ -522,6 +546,24 @@ var MyApp;
             return DiscussionController;
         }());
         Controllers.DiscussionController = DiscussionController;
+        var DeleteDiscussionController = (function () {
+            function DeleteDiscussionController(discussionService, $stateParams, $state) {
+                this.discussionService = discussionService;
+                this.$stateParams = $stateParams;
+                this.$state = $state;
+            }
+            DeleteDiscussionController.prototype.deleteDisc = function () {
+                var _this = this;
+                this.discussionService.deleteDiscussion(this.$stateParams['id']).then(function () {
+                    _this.$state.go('discussion');
+                });
+            };
+            DeleteDiscussionController.prototype.cancel = function () {
+                this.$state.go("discussion");
+            };
+            return DeleteDiscussionController;
+        }());
+        Controllers.DeleteDiscussionController = DeleteDiscussionController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
 })(MyApp || (MyApp = {}));
 var MyApp;
@@ -543,7 +585,7 @@ var MyApp;
             TestModalController.prototype.showSignInModal = function (x) {
                 this.$uibModal.open({
                     templateUrl: '/ngApp/views/modalViews/loginPage.html',
-                    controller: 'SignInModalController',
+                    controller: MyApp.Controllers.LoginController,
                     controllerAs: 'controller',
                     resolve: {
                         x: function () { return x; },
@@ -622,9 +664,10 @@ var MyApp;
     var Controllers;
     (function (Controllers) {
         var PostController = (function () {
-            function PostController(postsService, $stateParams) {
+            function PostController(postsService, $stateParams, $state) {
                 this.postsService = postsService;
                 this.$stateParams = $stateParams;
+                this.$state = $state;
                 this.getPost();
             }
             PostController.prototype.getPost = function () {
@@ -634,6 +677,24 @@ var MyApp;
             return PostController;
         }());
         Controllers.PostController = PostController;
+        var DeletePostController = (function () {
+            function DeletePostController(postsService, $stateParams, $state) {
+                this.postsService = postsService;
+                this.$stateParams = $stateParams;
+                this.$state = $state;
+            }
+            DeletePostController.prototype.deletePost = function () {
+                var _this = this;
+                this.postsService.deletePost(this.$stateParams['id']).then(function () {
+                    _this.$state.go('discussions');
+                });
+            };
+            DeletePostController.prototype.cancel = function () {
+                this.$state.go('discussions');
+            };
+            return DeletePostController;
+        }());
+        Controllers.DeletePostController = DeletePostController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
 })(MyApp || (MyApp = {}));
 var MyApp;

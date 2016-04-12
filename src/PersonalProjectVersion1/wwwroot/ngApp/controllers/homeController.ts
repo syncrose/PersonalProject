@@ -18,7 +18,7 @@ namespace MyApp.Controllers {
 
             this.$uibModal.open({
                 templateUrl: '/ngApp/views/modalViews/loginPage.html',
-                controller: 'SignInModalController',
+                controller: MyApp.Controllers.LoginController,
                 controllerAs: 'controller',
                 resolve: {
                     x: () => x,

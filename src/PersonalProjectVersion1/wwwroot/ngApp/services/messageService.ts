@@ -14,6 +14,10 @@
         saveMsg(id, msgToCreate) {
             return this.msgResource.save({ id: id }, msgToCreate).$promise;
         }
+
+        deleteMsg(id) {
+            return this.msgResource.delete({ id: id }).$promise;
+        }
     }
 
     angular.module("MyApp").service("messageService", MessageService);

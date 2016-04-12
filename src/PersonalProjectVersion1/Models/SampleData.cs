@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using Microsoft.Data.Entity;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNet.Identity;
 
 namespace PersonalProjectVersion1.Models
 {
     public class SampleData
     {
-        public static void Initialize(IServiceProvider sp)
+        public async static void Initialize(IServiceProvider sp)
         {
             var db = sp.GetService<ApplicationDbContext>();
 
@@ -132,6 +135,35 @@ namespace PersonalProjectVersion1.Models
                 db.Discussions.AddRange(Discussions);
                 db.SaveChanges();
             }
+
+            var context = sp.GetService<ApplicationDbContext>();
+            var userManager = sp.GetService<UserManager<ApplicationUser>>();
+            context.Database.Migrate();
+
+            var syncrose = await userManager.FindByEmailAsync("syncrose@gmail.com");
+            if(syncrose == null)
+            {
+                syncrose = new ApplicationUser
+                {
+                    UserName = "syncrose@gmail.com",
+                    Email = "syncrose@gmail.com"
+                };
+                await userManager.CreateAsync(syncrose, "Secret123!");
+
+                await userManager.AddClaimAsync(syncrose, new Claim("IsAdmin", "true"));
+            }
+
+            var jonDoe = await userManager.FindByNameAsync("syncrose1@yahoo.com");
+            if(jonDoe == null)
+            {
+                jonDoe = new ApplicationUser
+                {
+                    UserName = "syncrose1@yahoo.com",
+                    Email = "syncrose1@yahoo.com"
+                };
+                await userManager.CreateAsync(jonDoe, "Secret123!");
+            }
+
         }
     }
 }

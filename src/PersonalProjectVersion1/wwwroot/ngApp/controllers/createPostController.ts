@@ -20,4 +20,24 @@
         }
     }
 
+    export class DeleteMsgController {
+        public msgToDelete;
+
+        constructor(
+            private messageService: MyApp.Services.MessageService,
+            private $stateParams: ng.ui.IStateParamsService,
+            private $state: ng.ui.IStateService) {
+        }
+
+        DeleteMsgController() {
+            this.messageService.deleteMsg(this.$stateParams['id']).then(() => {
+                this.$state.go('messages');
+            });
+        }
+
+        cancel() {
+            this.$state.go('messages');
+        }
+    }
+
 }

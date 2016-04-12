@@ -25,6 +25,12 @@ namespace MyApp {
                 controller: MyApp.Controllers.MainDiscussionPageController,
                 controllerAs: 'controller'
             })
+            .state('discDelete', {
+                url: '/deleteDiscussion/:id',
+                templateUrl: 'ngApp/views/deleteDiscussion.html',
+                controller: MyApp.Controllers.DeleteDiscussionController,
+                controllerAs: 'controller'
+            })
             .state('newDiscussion', {
                 url: '/createDiscussion',
                 templateUrl: 'ngApp/views/createDiscussion.html',
@@ -41,6 +47,12 @@ namespace MyApp {
                 url: '/createPost/:id',
                 templateUrl: 'ngApp/views/createPost.html',
                 controller: MyApp.Controllers.CreatePostController,
+                controllerAs: 'controller'
+            })
+            .state('postDelete', {
+                url: '/deletePost/:id',
+                templateUrl: 'ngApp/views/deletePost.html',
+                controller: MyApp.Controllers.DeletePostController,
                 controllerAs: 'controller'
             })
             .state('messages', {
@@ -90,4 +102,27 @@ namespace MyApp {
         $locationProvider.html5Mode(true);
     });
 
+    angular.module('MyApp').factory('authInterceptor', (
+        $q: ng.IQService,
+        $window: ng.IWindowService,
+        $location: ng.ILocationService
+    ) =>
+        ({
+            request: function (config) {
+                config.headers = config.headers || {};
+                config.headers['X-Requested-With'] = 'XMLHttpRequest';
+                return config;
+            },
+            responseError: function (rejection) {
+                if (rejection.status === 401 || rejection.status === 403) {
+                    $location.path('/login');
+                }
+                return $q.reject(rejection);
+            }
+        })
+    );
+
+    angular.module('MyApp').config(function ($httpProvider) {
+        $httpProvider.interceptors.push('authInterceptor');
+    });
 }
