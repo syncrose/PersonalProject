@@ -40,7 +40,7 @@ namespace PersonalProjectVersion1.API
         {
             if(post.Id == 0)
             {
-                post.TimeCreated = DateTime.Now;
+               
                 _repo.AddPost(id, post);
             }
             else

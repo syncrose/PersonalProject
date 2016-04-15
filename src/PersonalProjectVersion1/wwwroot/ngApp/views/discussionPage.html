@@ -16,7 +16,7 @@
 
 
 
-<div id="wrapper" class="col-md-3">
+<div  class="col-md-3">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
@@ -94,7 +94,7 @@
                                     </p>
                                     <p class="lead"><button class="btn btn-default">Read More</button></p>
                                     <p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span><a href="/deletePost/{{post.id}}"><i class="glyphicon glyphicon-remove"></i> Delete</a></p>
-                                    <ul class="list-inline"><li><a href="#">{{post.timeCreated | date: 'MM/dd/yyyy'}}</a></li><li><a href="/discussion/post/{{post.id}}"><i class="glyphicon glyphicon-comment"></i> Comments</a></li></ul>
+                                    <ul class="list-inline"><li><a href="#">{{post.timeCreated | date: 'MM/dd/yyyy'}}</a></li><li><a href="/discussion/post/{{post.id}}"><i class="glyphicon glyphicon-comment"></i> Comments</a></li><li><a href="/editPost/{{post.id}}"><i class="glyphicon glyphicon-comment"></i> Edit</a></li></ul>
                                 </div>
                                 <div class="col-xs-3"></div>
                             </div>
@@ -126,7 +126,7 @@
 
     <hr>
 
-<a href="/createPost/{{controller.discussion.id}}">Create a New Topic!</a>
+<a class="btn btn-block center-block btn-lg" href="/createPost/{{controller.discussion.id}}">Create a New Topic!</a>
 
 
 

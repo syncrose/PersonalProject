@@ -32,13 +32,17 @@ namespace PersonalProjectVersion1.Services
         {
             _repo.Add(post);
            var disc = _repo.Query<Discussion>().Where(d => d.Id == id).Include(d => d.LinkedPosts).FirstOrDefault();
+            post.TimeCreated = DateTime.Now;
             disc.LinkedPosts.Add(post);
             _repo.SaveChanges();
           
         }
         public void UpdatePost(Post post)
         {
-            _repo.Update(post);
+            var originalPost = _repo.Query<Post>().Where(p => p.Id == post.Id).FirstOrDefault();
+            originalPost.Title = post.Title;
+            originalPost.Content = post.Content;
+            _repo.Update<Post>(originalPost);
         }
 
         public void DeletePost(int id)

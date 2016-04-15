@@ -37,6 +37,12 @@ namespace MyApp {
                 controller: MyApp.Controllers.CreateDiscussionController,
                 controllerAs: 'controller'
             })
+            .state('editDiscussion', {
+                url: '/editDiscussion/:id',
+                templateUrl: 'ngApp/views/editDiscussion.html',
+                controller: MyApp.Controllers.EditDiscussionController,
+                controllerAs: 'controller'
+            })
             .state('discussions', {
                 url: '/discussion/:id',
                 templateUrl: 'ngApp/views/discussionPage.html',
@@ -47,6 +53,12 @@ namespace MyApp {
                 url: '/createPost/:id',
                 templateUrl: 'ngApp/views/createPost.html',
                 controller: MyApp.Controllers.CreatePostController,
+                controllerAs: 'controller'
+            })
+            .state('editPost', {
+                url: '/editPost/:id',
+                templateUrl: 'ngApp/views/editPost.html',
+                controller: MyApp.Controllers.EditPostController,
                 controllerAs: 'controller'
             })
             .state('postDelete', {
@@ -61,10 +73,22 @@ namespace MyApp {
                 controller: MyApp.Controllers.PostController,
                 controllerAs: 'controller'
             })
+            .state('deleteMsg', {
+                url: '/deleteMsg/:id',
+                templateUrl: 'ngApp/views/deleteMsg.html',
+                controller: MyApp.Controllers.DeleteMsgController,
+                controllerAs: 'controller'
+            })
             .state('newMsg', {
                 url: '/createMsg/:id',
                 templateUrl: 'ngApp/views/createMessage.html',
                 controller: MyApp.Controllers.CreateMessageController,
+                controllerAs: 'controller'
+            })
+            .state('editMsg', {
+                url: '/editMsg/:id',
+                templateUrl: 'ngApp/views/editMsg.html',
+                controller: MyApp.Controllers.EditMsgController,
                 controllerAs: 'controller'
             })
             .state('profile', {

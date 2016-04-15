@@ -17,21 +17,23 @@
                     <form role="form">
                         <div class="form-group">
                             <label for="email">Email address:</label>
-                            <input type="email" class="form-control" id="email">
+                            <input ng-model="controller.registerUser.email">
                         </div>
                         <div class="form-group">
                             <label for="pwd">Password:</label>
-                            <input type="password" class="form-control" id="pwd">
+                            <input ng-model="controller.registerUser.password">
                         </div>
-                        <div class="checkbox">
-                            <label><input type="checkbox"> Remember me</label>
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input ng-model="controller.registerUser.confirmPassword">
                         </div>
-                        <button type="submit" class="btn btn-default">Sign Up</button>
+                      
+                        <button type="submit" class="btn btn-default" ng-click="controller.register()">Sign Up</button>
                     </form>
                 </div>
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >
                         Close
                     </button>
                     <button type="button" class="btn btn-primary">

@@ -32,7 +32,7 @@ namespace MyApp.Controllers {
 
             this.$uibModal.open({
                 templateUrl: '/ngApp/views/modalViews/signUp.html',
-                controller: 'SignUpModalController',
+                controller: MyApp.Controllers.RegisterController,
                 controllerAs: 'controller',
                 resolve: {
                     x: () => x,

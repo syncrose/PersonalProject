@@ -32,13 +32,16 @@ namespace PersonalProjectVersion1.Services
         {
             _repo.Add(msg);
             var post = _repo.Query<Post>().Where(p => p.Id == Id).Include(p => p.LinkedMessages).FirstOrDefault();
+            msg.TimeCreated = DateTime.Now;
             post.LinkedMessages.Add(msg);
             _repo.SaveChanges();
         }
 
         public void UpdateMsg(Message msg)
         {
-            _repo.Update(msg);
+            var originalMsg = _repo.Query<Message>().Where(m => m.Id == msg.Id).FirstOrDefault();
+            originalMsg.Content = msg.Content;
+            _repo.Update<Message>(originalMsg);
         }
 
         public void DeleteMsg(int id)

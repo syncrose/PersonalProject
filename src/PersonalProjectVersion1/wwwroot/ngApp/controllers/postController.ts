@@ -20,16 +20,20 @@
 
     export class DeletePostController {
         public postToDelete;
+        public discId;
+
+        
 
         constructor(
             private postsService: MyApp.Services.PostsService,
             private $stateParams: ng.ui.IStateParamsService,
             private $state: ng.ui.IStateService) {
+            this.discId = this.$stateParams['id'];
         }
 
         deletePost() {
             this.postsService.deletePost(this.$stateParams['id']).then(() => {
-                this.$state.go('discussions');
+                this.$state.go('discussions', { id: 8004 });
             });
         }
 

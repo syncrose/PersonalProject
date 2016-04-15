@@ -41,7 +41,9 @@ namespace PersonalProjectVersion1
         public void ConfigureServices(IServiceCollection services)
         {
 
-
+            services.AddAuthorization(options => {
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("IsAdmin"));
+            });
             // Add framework services
             services.AddScoped<IGenericRepository, GenericRepository>();
             services.AddScoped<IDiscussionService, DiscussionService>();

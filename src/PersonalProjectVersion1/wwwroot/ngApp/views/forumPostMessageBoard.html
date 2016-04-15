@@ -1,5 +1,5 @@
 ﻿
-<div class="row">
+<div class="row" id="msgHtml">
     <div class="container">
     <br>
     <div class="col-md-6 col-sm-8 col-md-offset-2 text-center">
@@ -41,8 +41,8 @@
                     <div class="col-xs-3">
                         <ul class="list">
                             <li>{{msg.timeCreated | date: 'MM/dd/yyyy'}}</li>
-                            <li>Maybe link to user</li>
-                            <li>Maybe their total posts</li>
+                            <li><a href="/deleteMsg/{{msg.id}}">Delete</a></li>
+                            <li><a href="/editMsg/{{msg.id}}">Edit</a></li>
                             <li>Something interesting</li>
 
 
@@ -59,5 +59,5 @@
         <hr>
     </div>
 
-    <a href="/createMsg/{{controller.post.id}}">Create a New Message!</a>
+    <a class="btn btn-block btn-toolbar btn-lg" href="/createMsg/{{controller.post.id}}">Create a New Message!</a>
 </div>

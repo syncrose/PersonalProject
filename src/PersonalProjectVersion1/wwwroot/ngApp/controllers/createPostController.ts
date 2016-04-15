@@ -20,24 +20,25 @@
         }
     }
 
-    export class DeleteMsgController {
-        public msgToDelete;
+    export class EditPostController {
+        public postToEdit;
+        public discussionId;
 
-        constructor(
-            private messageService: MyApp.Services.MessageService,
-            private $stateParams: ng.ui.IStateParamsService,
-            private $state: ng.ui.IStateService) {
+        constructor(private postsService: MyApp.Services.PostsService,
+            private $state: ng.ui.IStateService, private $stateParams: ng.ui.IStateParamsService
+        ) {
+            this.discussionId = this.$stateParams['id'];
+            this.postToEdit = this.postsService.getPost(this.$stateParams['id']);
         }
 
-        DeleteMsgController() {
-            this.messageService.deleteMsg(this.$stateParams['id']).then(() => {
-                this.$state.go('messages');
+        editPost() {
+        
+            this.postsService.savePost(this.discussionId, this.postToEdit).then((data) => {
+                console.log(this.discussionId);
+                this.$state.go('discussions', { id: 8004 });
             });
         }
 
-        cancel() {
-            this.$state.go('messages');
-        }
     }
 
 }

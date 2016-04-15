@@ -16,6 +16,7 @@
         }
 
         saveDiscussion(discToSave) {
+            debugger;
             return this.discussionResource.save(discToSave).$promise;
         }
 

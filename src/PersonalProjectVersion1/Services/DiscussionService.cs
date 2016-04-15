@@ -47,9 +47,17 @@ namespace PersonalProjectVersion1.Services
            
         }
 
-        public void UpDisc(Discussion discussion)
+  
+
+        public void UpDisc(Discussion disc)
         {
-            _repo.Update(discussion);
+            var originalDisc = _repo.Query<Discussion>().Where(d => d.Id == disc.Id).FirstOrDefault();
+            originalDisc.InterestName = disc.InterestName;
+            originalDisc.ImageHeader = disc.ImageHeader;
+            originalDisc.Headline = disc.Headline;
+            originalDisc.Description = disc.Description;
+            _repo.Update<Discussion>(originalDisc);
+            //_repo.SaveChanges();
         }
     }
 }

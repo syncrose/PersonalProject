@@ -13,6 +13,12 @@
 
 }
 
+#msgHtml {
+    margin-top: 50px;
+    background-color: cornsilk;
+    opacity: .75;
+}
+
 #MainNav {
     height: 75px;
    

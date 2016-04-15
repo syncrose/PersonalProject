@@ -6,6 +6,7 @@ using PersonalProjectVersion1.Repository;
 using Microsoft.AspNet.Mvc;
 using PersonalProjectVersion1.Services;
 using PersonalProjectVersion1.Models;
+using Microsoft.AspNet.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,8 +38,10 @@ namespace PersonalProjectVersion1.API
 
         // POST api/values
         [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Post([FromBody]Discussion discussion)
         {
+            
             if(discussion.Id == 0)
             {
                 

@@ -42,6 +42,9 @@
             this.accountService.login(this.loginUser).then(() => {
                 
                 this.$location.path('/');
+                this.ok();
+
+                
             }).catch((results) => {
                 this.validationMessages = results;
             });
@@ -53,7 +56,7 @@
 
         }
 
-        constructor(private accountService: MyApp.Services.AccountService, private $location: ng.ILocationService, public $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance, private x, private $stateParams: ng.ui.IStateParamsService) { }
+        constructor(private accountService: MyApp.Services.AccountService, private $state: ng.ui.IStateService, private $location: ng.ILocationService, public $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance, private x, private $stateParams: ng.ui.IStateParamsService) { }
     }
 
 
@@ -62,14 +65,20 @@
         public validationMessages;
 
         public register() {
+            debugger;
             this.accountService.register(this.registerUser).then(() => {
                 this.$location.path('/');
+                this.ok();
             }).catch((results) => {
                 this.validationMessages = results;
             });
         }
 
-        constructor(private accountService: MyApp.Services.AccountService, private $location: ng.ILocationService) { }
+        public ok() {
+            this.$uibModalInstance.close();
+        }
+
+        constructor(private accountService: MyApp.Services.AccountService, private $location: ng.ILocationService, private $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance, private $state: ng.ui.IStateService) { }
     }
 
 
