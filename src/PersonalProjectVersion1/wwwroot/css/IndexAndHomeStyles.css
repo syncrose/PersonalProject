@@ -1,0 +1,50 @@
+﻿#topHomeContent {
+    margin-top: 750px;
+}
+
+.content-1 {
+    opacity: .75;
+    margin-left: -15px;
+    margin-right: -15px;
+    background-color: white;
+}
+
+.content-2 {
+    opacity: .75;
+     margin-left: -15px;
+    margin-right: -15px;
+    background-color: azure;
+}
+
+.homeImage {
+    padding-top: 35px;
+}
+
+.introMessage {
+        position: relative;
+    padding-top: 20%;
+    padding-bottom: 20%;
+}
+
+.homeWrapper {
+    margin-top: -750px;
+}
+
+
+.banner {
+     margin-left: -15px;
+    margin-right: -15px;
+    padding: 100px 0;
+    color: #f8f8f8;
+    background: url(http://www.mujahidurrehman.com/wp-content/themes/Momento/timthumb.php?src=http://www.mujahidurrehman.com/wp-content/uploads/2015/12/Landscape-Photography-For-Beginners-Couse.jpg&w=1500&h=250) no-repeat center center;
+    background-size: cover;
+}
+
+.bannerInner {
+
+    position: center;
+}
+
+.p lead {
+    font-size: 8px;
+}
