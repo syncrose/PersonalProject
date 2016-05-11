@@ -1,19 +1,10 @@
 ﻿namespace MyApp.Controllers {
 
-    export class ProfileController {
-    
-        
-        
-    }
+    export class InnerProfileController {
 
-   
+    }
 
     export class EventsViewController {
-
-
-    }
-
-    export class InnerProfileController {
 
     }
 

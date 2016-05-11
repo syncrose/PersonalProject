@@ -3,6 +3,10 @@
     export class AccountController {
         public externalLogins;
 
+        public getUserId() {
+            return this.accountService.getUserId();
+        }
+
         public getUserName() {
             return this.accountService.getUserName();
         }
@@ -24,11 +28,46 @@
             return this.accountService.getExternalLogins();
         }
 
-        constructor(private accountService: MyApp.Services.AccountService, private $location: ng.ILocationService) {
+
+        public showSignInModal(x) {
+
+            this.$uibModal.open({
+                templateUrl: '/ngApp/views/modalViews/loginPage.html',
+                controller: MyApp.Controllers.LoginController,
+                controllerAs: 'controller',
+                resolve: {
+                    x: () => x,
+
+                },
+                size: 'lg'
+            });
+
+        }
+        public showSignUpModal(x) {
+
+            this.$uibModal.open({
+                templateUrl: '/ngApp/views/modalViews/signUp.html',
+                controller: MyApp.Controllers.RegisterController,
+                controllerAs: 'controller',
+                resolve: {
+                    x: () => x,
+
+                },
+                size: 'lg'
+            });
+
+        }
+
+        constructor(private accountService: MyApp.Services.AccountService,
+            private $location: ng.ILocationService,
+            private $uibModal: ng.ui.bootstrap.IModalService,
+            private $stateParams: ng.ui.IStateParamsService) {
             this.getExternalLogins().then((results) => {
                 this.externalLogins = results;
             });
         }
+
+     
     }
 
     angular.module('MyApp').controller('AccountController', AccountController);

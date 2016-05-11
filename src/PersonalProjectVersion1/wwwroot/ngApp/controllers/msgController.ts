@@ -3,18 +3,26 @@
     export class CreateMessageController {
         public msgToCreate;
         public postId;
+        public userId;
+        public postIdUserId;
 
         constructor(private messageService: MyApp.Services.MessageService,
+            private accountService: MyApp.Services.AccountService,
             private $state: ng.ui.IStateService,
-            private $stateParams: ng.ui.IStateParamsService) {
+            private $stateParams: ng.ui.IStateParamsService
+           
+        ) {
             this.postId = this.$stateParams['id'];
+            this.userId = accountService.getUserId();
+            this.postIdUserId = this.postId + " " + this.userId;
         }
 
+   
+
         saveMsg() {
-            this.messageService.saveMsg(this.postId, this.msgToCreate).then(() => {
-                this.$state.go('messages', {
-                    id: this.postId
-                });
+            debugger;
+            this.messageService.saveMsg(this.postIdUserId, this.msgToCreate).then(() => {
+                this.$state.go('discussion');
             });
         }
     }
@@ -30,11 +38,11 @@
             this.msgToEdit = this.messageService.getMessage(this.$stateParams['id']);
         }
 
-        editMsg() {
-            this.messageService.saveMsg(this.postId, this.msgToEdit).then(() => {
-                this.$state.go("messages", { id: this.postId });
-            });
-        }
+        //editMsg() {
+        //    this.messageService.saveMsg(this.postId, this.msgToEdit).then(() => {
+        //        this.$state.go("messages", { id: this.postId });
+        //    });
+        //}
     }
 
 

@@ -49,6 +49,7 @@ namespace PersonalProjectVersion1.API
             var claims = await _userManager.GetClaimsAsync(user);
             var vm = new UserViewModel
             {
+               UserId = user.Id,
                 UserName = user.UserName,
                 Claims = claims.ToDictionary(c => c.Type, c => c.Value)
             };

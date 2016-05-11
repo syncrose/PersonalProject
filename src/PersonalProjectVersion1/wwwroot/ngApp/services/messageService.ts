@@ -12,6 +12,7 @@
         }
 
         saveMsg(id, msgToCreate) {
+            debugger;
             return this.msgResource.save({ id: id }, msgToCreate).$promise;
         }
 

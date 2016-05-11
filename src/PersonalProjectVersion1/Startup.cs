@@ -49,6 +49,7 @@ namespace PersonalProjectVersion1
             services.AddScoped<IDiscussionService, DiscussionService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IMsgService, MsgService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<ApplicationDbContext>(options =>

@@ -1,0 +1,24 @@
+﻿<div class="container profileBody">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <table class="table profileBox">
+                <tr>
+                    <th>Status</th>
+                    <th>User Name</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                </tr>
+                <tr ng-repeat="user in controller.users">
+                    <td>
+                      
+                    </td>
+                    <td><a href="/profile/{{user.id}}">{{user.userName}}</a></td>
+                    <td>{{user.first}} {{user.last}}</td>
+                    <td>{{user.email}}</td>
+                </tr>
+            </table>
+
+          
+        </div>
+    </div>
+</div>

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PersonalProjectVersion1.Models;
+using Microsoft.Data.Entity;
+
 
 namespace PersonalProjectVersion1.Services
 {
@@ -28,11 +30,13 @@ namespace PersonalProjectVersion1.Services
             return data;
         }
         
-        public void addMsg(int Id, Message msg)
+        public void addMsg(int Id, string userId, Message msg)
         {
-            _repo.Add(msg);
             var post = _repo.Query<Post>().Where(p => p.Id == Id).Include(p => p.LinkedMessages).FirstOrDefault();
+            var user = _repo.Query<ApplicationUser>().Where(u => u.Id == userId).Include(u => u.UserMessages).FirstOrDefault();
+            user.UserMessages.Add(msg);
             msg.TimeCreated = DateTime.Now;
+            _repo.Add(msg);
             post.LinkedMessages.Add(msg);
             _repo.SaveChanges();
         }

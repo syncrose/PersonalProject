@@ -14,5 +14,7 @@ namespace PersonalProjectVersion1.Models
         public ICollection<Message> LinkedMessages { get; set; }
         public DateTime TimeCreated { get; set; }
         public bool IsViewable { get; set; }
+        public string UserId { get; set; }
+
     }
 }

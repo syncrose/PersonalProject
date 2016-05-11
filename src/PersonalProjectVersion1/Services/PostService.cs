@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.Entity;
+
 
 namespace PersonalProjectVersion1.Services
 {
@@ -28,12 +30,17 @@ namespace PersonalProjectVersion1.Services
             return data;
         }
 
-        public void AddPost(int id, Post post)
+        public void AddPost(int id, string userId, Post post)
         {
-            _repo.Add(post);
+         
            var disc = _repo.Query<Discussion>().Where(d => d.Id == id).Include(d => d.LinkedPosts).FirstOrDefault();
             post.TimeCreated = DateTime.Now;
+            var user = _repo.Query<ApplicationUser>().Where(u => u.Id == userId).Include(u => u.UserPosts).FirstOrDefault();
+            user.UserPosts.Add(post);
+            
             disc.LinkedPosts.Add(post);
+          
+            _repo.Add(post);
             _repo.SaveChanges();
           
         }

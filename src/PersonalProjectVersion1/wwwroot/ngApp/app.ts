@@ -1,10 +1,13 @@
 namespace MyApp {
 
-    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap']).config((
+    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap', 'angular-filepicker']).config((
         $stateProvider: ng.ui.IStateProvider,
         $urlRouterProvider: ng.ui.IUrlRouterProvider,
-        $locationProvider: ng.ILocationProvider
+        $locationProvider: ng.ILocationProvider,
+        filepickerProvider: any
     ) => {
+
+        filepickerProvider.setKey('Ay0qe4wR6efe0Ua2XZC5wz');
         // Define routes
         $stateProvider
             .state('home', {
@@ -91,18 +94,24 @@ namespace MyApp {
                 controller: MyApp.Controllers.EditMsgController,
                 controllerAs: 'controller'
             })
+            .state('users', {
+                url: '/users',
+                templateUrl: 'ngApp/views/users.html',
+                controller: MyApp.Controllers.UsersController,
+                controllerAs: 'controller'
+            })
             .state('profile', {
-                url: '/profile',
+                url: '/profile/:id',
                 abstract: true,
                 templateUrl: 'ngApp/views/profilePage.html',
-                controller: MyApp.Controllers.ProfileController,
+                controller: MyApp.Controllers.UserController,
                 controllerAs: 'controller'
             })
             .state('profile.details', {
                 views: {
                     'innerProfile': {
                         templateUrl: '/ngApp/views/InnerProfileContent.html',
-                        controller: MyApp.Controllers.InnerProfileController,
+                        controller: MyApp.Controllers.UserController,
                         controllerAs: 'controller'
                     },
                     'events': {

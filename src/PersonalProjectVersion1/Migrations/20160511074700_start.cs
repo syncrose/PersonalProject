@@ -31,6 +31,9 @@ namespace PersonalProjectVersion1.Migrations
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
+                    First = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
+                    Last = table.Column<string>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     NormalizedEmail = table.Column<string>(nullable: true),
@@ -149,15 +152,23 @@ namespace PersonalProjectVersion1.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ApplicationUserId = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
                     DiscussionId = table.Column<int>(nullable: true),
                     IsViewable = table.Column<bool>(nullable: false),
                     TimeCreated = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Post", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Post_ApplicationUser_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Post_Discussion_DiscussionId",
                         column: x => x.DiscussionId,
@@ -171,6 +182,7 @@ namespace PersonalProjectVersion1.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ApplicationUserId = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
                     IsViewable = table.Column<bool>(nullable: false),
                     PostId = table.Column<int>(nullable: true),
@@ -179,6 +191,12 @@ namespace PersonalProjectVersion1.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Message", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Message_ApplicationUser_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Message_Post_PostId",
                         column: x => x.PostId,
@@ -208,8 +226,8 @@ namespace PersonalProjectVersion1.Migrations
             migrationBuilder.DropTable("AspNetUserRoles");
             migrationBuilder.DropTable("Message");
             migrationBuilder.DropTable("AspNetRoles");
-            migrationBuilder.DropTable("AspNetUsers");
             migrationBuilder.DropTable("Post");
+            migrationBuilder.DropTable("AspNetUsers");
             migrationBuilder.DropTable("Discussion");
         }
     }

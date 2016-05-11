@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using PersonalProjectVersion1.Services;
+using PersonalProjectVersion1.ViewModels;
 using PersonalProjectVersion1.Models;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,45 +12,34 @@ using PersonalProjectVersion1.Models;
 namespace PersonalProjectVersion1.API
 {
     [Route("api/[controller]")]
-    public class MsgsController : Controller
+    public class UsersController : Controller
     {
-        IMsgService _repo;
-
-        public MsgsController(IMsgService repo)
+        IUserService _repo;
+        public UsersController(IUserService repo)
         {
             this._repo = repo;
         }
+
         // GET: api/values
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_repo.GetMsgs());
+            return Ok( _repo.getUsers());
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(string id)
         {
-            return Ok(_repo.GetMsg(id));
+            return Ok(_repo.getUser(id));
         }
 
         // POST api/values
-        [HttpPost("{id}")]
-        public IActionResult Post(string id, [FromBody]Message msg)
+        [HttpPost]
+        public IActionResult Post([FromBody]UserVM user)
         {
-            if(msg.Id == 0)
-            {
-                var data = id.Split(' ');
-                var post = data[0].ToString();
-                var newPostId = int.Parse(post);
-                var userId = data[1].ToString();
-                
-                _repo.addMsg(newPostId, userId, msg);
-            }else
-            {
-                _repo.UpdateMsg(msg);
-            }
-            return Ok(msg);
+            _repo.UpdateUser(user);
+            return Ok();
         }
 
         // PUT api/values/5
@@ -62,7 +52,6 @@ namespace PersonalProjectVersion1.API
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            _repo.DeleteMsg(id);
         }
     }
 }

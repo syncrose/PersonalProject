@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
+using PersonalProjectVersion1.ViewModels;
 
 namespace PersonalProjectVersion1.Models
 {
@@ -12,6 +13,9 @@ namespace PersonalProjectVersion1.Models
         public DbSet<Discussion> Discussions { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Message> Messages { get; set; }
+
+
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)

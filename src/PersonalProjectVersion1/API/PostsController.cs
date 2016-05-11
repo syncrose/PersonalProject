@@ -36,12 +36,18 @@ namespace PersonalProjectVersion1.API
 
         // POST api/values
         [HttpPost("{id}")]
-        public IActionResult Post(int id, [FromBody]Post post)
+        public IActionResult Post(string id, [FromBody]Post post)
         {
             if(post.Id == 0)
             {
-               
-                _repo.AddPost(id, post);
+                var data = id.Split(' ');
+                var disc = data[0].ToString();
+                var userId = data[1].ToString();
+              
+                var newDiscId = int.Parse(disc);
+             
+
+                _repo.AddPost(newDiscId, userId, post);
             }
             else
             {

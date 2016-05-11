@@ -145,6 +145,9 @@ namespace PersonalProjectVersion1.Models
             {
                 syncrose = new ApplicationUser
                 {
+                    First = "Cory",
+                    Last = "Couty",
+                    Image = "http://www.funny-animalpictures.com/media/content/items/images/funnymonkeys0123_O.jpg",
                     UserName = "syncrose@gmail.com",
                     Email = "syncrose@gmail.com"
                 };
@@ -158,6 +161,9 @@ namespace PersonalProjectVersion1.Models
             {
                 jonDoe = new ApplicationUser
                 {
+                    First = "Chief",
+                    Last = "Bananas",
+                    Image = "http://funny-pics.co/wp-content/uploads/Funny-Monkey-Portrait-445x445.jpg",
                     UserName = "syncrose1@yahoo.com",
                     Email = "syncrose1@yahoo.com"
                 };

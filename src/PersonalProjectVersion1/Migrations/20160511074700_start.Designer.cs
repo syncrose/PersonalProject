@@ -8,8 +8,8 @@ using PersonalProjectVersion1.Models;
 namespace PersonalProjectVersion1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160411233256_startSampleWithTwoUsers")]
-    partial class startSampleWithTwoUsers
+    [Migration("20160511074700_start")]
+    partial class start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -113,6 +113,12 @@ namespace PersonalProjectVersion1.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("First");
+
+                    b.Property<string>("Image");
+
+                    b.Property<string>("Last");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -168,6 +174,8 @@ namespace PersonalProjectVersion1.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<string>("Content");
 
                     b.Property<bool>("IsViewable");
@@ -184,6 +192,8 @@ namespace PersonalProjectVersion1.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<string>("Content");
 
                     b.Property<int?>("DiscussionId");
@@ -193,6 +203,8 @@ namespace PersonalProjectVersion1.Migrations
                     b.Property<DateTime>("TimeCreated");
 
                     b.Property<string>("Title");
+
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
                 });
@@ -231,6 +243,10 @@ namespace PersonalProjectVersion1.Migrations
 
             modelBuilder.Entity("PersonalProjectVersion1.Models.Message", b =>
                 {
+                    b.HasOne("PersonalProjectVersion1.Models.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("PersonalProjectVersion1.Models.Post")
                         .WithMany()
                         .HasForeignKey("PostId");
@@ -238,6 +254,10 @@ namespace PersonalProjectVersion1.Migrations
 
             modelBuilder.Entity("PersonalProjectVersion1.Models.Post", b =>
                 {
+                    b.HasOne("PersonalProjectVersion1.Models.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("PersonalProjectVersion1.Models.Discussion")
                         .WithMany()
                         .HasForeignKey("DiscussionId");
