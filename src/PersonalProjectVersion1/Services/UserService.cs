@@ -21,6 +21,7 @@ namespace PersonalProjectVersion1.Services
         public List<ApplicationUser> getUsers()
         {
             var users = _repo.Query<ApplicationUser>().Include(u => u.UserPosts).Include(u => u.UserMessages).ToList();
+            
             //var usersVM = new List<UserVM>();
             //foreach(var user in users)
             //{

@@ -79,9 +79,9 @@
                         <br>
                         <div class="col-lg-10">
                             <div class="col-md-2 col-sm-3 text-center">
-                                <a class="story-img" href="#"><img src="http://funnystack.com/wp-content/uploads/2014/04/Funny-Monkey-321.jpg" style="width:150px;height:150px" class="img-responsive"></a>
-                                <br />
-                                <br />
+                                <a class="story-img" href="#"><img src="{{post.postImage}}" style="width:150px;height:150px" class="img-responsive"></a>
+                                <p>{{post.postFirst}} {{post.postLast}}</p>
+                                <p>{{post.postUserName}}</p>
                                 <br />
                                 <hr />
                                
@@ -128,7 +128,7 @@
 
     <hr>
 
-<a class="btn btn-block center-block btn-lg" href="/createPost/{{controller.discussion.id}}">Create a New Topic!</a>
+<button class="btn btn-block center-block btn-lg" ng-click="controller.addPostModal(controller.discussion.id)">Create a New Topic!</button>
 
 
 

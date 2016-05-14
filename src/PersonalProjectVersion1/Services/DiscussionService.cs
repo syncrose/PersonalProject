@@ -30,6 +30,7 @@ namespace PersonalProjectVersion1.Services
         public Discussion GetDiscussion(int Id)
         {
             var data = _repo.Query<Discussion>().Where(d => d.Id == Id).Include(d => d.LinkedPosts).FirstOrDefault();
+           
             return data;
         }
 

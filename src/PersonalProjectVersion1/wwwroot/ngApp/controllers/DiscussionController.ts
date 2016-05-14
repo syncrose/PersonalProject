@@ -6,7 +6,8 @@
 
         constructor(
             private discussionService: MyApp.Services.DiscussionService,
-            private $stateParams: ng.ui.IStateParamsService) {
+            private $stateParams: ng.ui.IStateParamsService,
+            private $uibModal: ng.ui.bootstrap.IModalService) {
             this.getDiscussion();
         }
 
@@ -14,6 +15,22 @@
             let discId = this.$stateParams['id'];
             this.discussion = this.discussionService.getDiscussion(discId);
         }
+
+        public addPostModal(id) {
+
+            this.$uibModal.open({
+                templateUrl: '/ngApp/views/createPost.html',
+                controller: MyApp.Controllers.CreatePostController,
+                controllerAs: 'controller',
+                resolve: {
+                    id: () => id,
+
+                },
+                size: 'md'
+            });
+
+        }
+
     }
 
     export class DeleteDiscussionController {

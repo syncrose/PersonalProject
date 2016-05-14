@@ -179,6 +179,14 @@ namespace PersonalProjectVersion1.Migrations
 
                     b.Property<bool>("IsViewable");
 
+                    b.Property<string>("MsgFirst");
+
+                    b.Property<string>("MsgImage");
+
+                    b.Property<string>("MsgLast");
+
+                    b.Property<string>("MsgUserName");
+
                     b.Property<int?>("PostId");
 
                     b.Property<DateTime>("TimeCreated");
@@ -198,6 +206,14 @@ namespace PersonalProjectVersion1.Migrations
                     b.Property<int?>("DiscussionId");
 
                     b.Property<bool>("IsViewable");
+
+                    b.Property<string>("PostFirst");
+
+                    b.Property<string>("PostImage");
+
+                    b.Property<string>("PostLast");
+
+                    b.Property<string>("PostUserName");
 
                     b.Property<DateTime>("TimeCreated");
 

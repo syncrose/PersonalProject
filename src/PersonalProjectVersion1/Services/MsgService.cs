@@ -21,6 +21,7 @@ namespace PersonalProjectVersion1.Services
         public List<Message> GetMsgs()
         {
             var data = _repo.Query<Message>().ToList();
+            data.OrderByDescending(d => d.TimeCreated);
             return data;
         }
 

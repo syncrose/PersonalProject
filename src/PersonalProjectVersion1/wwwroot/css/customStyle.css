@@ -2,7 +2,7 @@
     background-image: url(https://prod_membership_artifacts.s3.amazonaws.com/background/5838902-stars_001.jpg);
     /*background-image: url(https://s-media-cache-ak0.pinimg.com/originals/34/7c/0a/347c0ae41c1480fcc92fe3445b96bd81.jpg);*/
     background-size: cover;
-    
+    color: white;
     background-repeat: no-repeat;
     padding-bottom: 275px;
     font-family: Crete Round;
@@ -12,6 +12,12 @@
     width:100%; height:100%*/
 
 }
+
+.homeWrapper {
+    color:black;
+}
+
+
 
 #msgHtml {
     margin-top: 50px;
@@ -154,7 +160,7 @@ img{
 
 #createDisc {
     font-size: 28px;
-    color: white;
+    color: black;
 }
 
 
@@ -199,7 +205,7 @@ img{
     background-color: transparent;
     border: none;
     font-size: 25px;
-    color: black;
+    color: white;
 }
 
 #mainBodyDiv {

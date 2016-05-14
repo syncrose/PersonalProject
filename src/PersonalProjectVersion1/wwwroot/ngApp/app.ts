@@ -116,7 +116,7 @@ namespace MyApp {
                     },
                     'events': {
                         templateUrl: '/ngApp/views/eventsPage.html',
-                        controller: MyApp.Controllers.EventsViewController,
+                        controller: MyApp.Controllers.UserController,
                         controllerAs: 'controller'
                     }
                 },

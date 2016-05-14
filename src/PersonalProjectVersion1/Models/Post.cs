@@ -15,6 +15,10 @@ namespace PersonalProjectVersion1.Models
         public DateTime TimeCreated { get; set; }
         public bool IsViewable { get; set; }
         public string UserId { get; set; }
+        public string PostUserName { get; set; }
+        public string PostFirst { get; set; }
+        public string PostLast { get; set; }
+        public string PostImage { get; set; }
 
     }
 }

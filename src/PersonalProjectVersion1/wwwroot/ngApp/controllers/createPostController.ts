@@ -9,22 +9,23 @@
 
         constructor(private postsService: MyApp.Services.PostsService,
             private accountService: MyApp.Services.AccountService,
-            private $state: ng.ui.IStateService, private $stateParams: ng.ui.IStateParamsService
+            private $state: ng.ui.IStateService, private $stateParams: ng.ui.IStateParamsService,
+            private $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
+            private id
         ) {
-            debugger;
             this.discussionId = this.$stateParams['id'];
             this.userId = accountService.getUserId();
             this.discIdUserId = this.discussionId + " " + this.userId;
         }
 
+        public ok() {
+            this.$uibModalInstance.close();
+        }
+
         savePost() {
-            debugger;
-
             this.postsService.savePost(this.discIdUserId, this.postToCreate).then(() => {
-
-                this.$state.go('discussion');
-
-               
+                this.ok();
+                this.$state.reload();
             });
         }
     }
@@ -37,6 +38,7 @@
         constructor(private postsService: MyApp.Services.PostsService,
             private accountService: MyApp.Services.AccountService,
             private $state: ng.ui.IStateService, private $stateParams: ng.ui.IStateParamsService
+          
         ) {
             this.discussionId = this.$stateParams['id'];
             this.postToEdit = this.postsService.getPost(this.$stateParams['id']);

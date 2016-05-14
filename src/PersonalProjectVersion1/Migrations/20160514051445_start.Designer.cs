@@ -8,7 +8,7 @@ using PersonalProjectVersion1.Models;
 namespace PersonalProjectVersion1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160511074700_start")]
+    [Migration("20160514051445_start")]
     partial class start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,6 +180,14 @@ namespace PersonalProjectVersion1.Migrations
 
                     b.Property<bool>("IsViewable");
 
+                    b.Property<string>("MsgFirst");
+
+                    b.Property<string>("MsgImage");
+
+                    b.Property<string>("MsgLast");
+
+                    b.Property<string>("MsgUserName");
+
                     b.Property<int?>("PostId");
 
                     b.Property<DateTime>("TimeCreated");
@@ -199,6 +207,14 @@ namespace PersonalProjectVersion1.Migrations
                     b.Property<int?>("DiscussionId");
 
                     b.Property<bool>("IsViewable");
+
+                    b.Property<string>("PostFirst");
+
+                    b.Property<string>("PostImage");
+
+                    b.Property<string>("PostLast");
+
+                    b.Property<string>("PostUserName");
 
                     b.Property<DateTime>("TimeCreated");
 

@@ -110,7 +110,7 @@ var MyApp;
                 },
                 'events': {
                     templateUrl: '/ngApp/views/eventsPage.html',
-                    controller: MyApp.Controllers.EventsViewController,
+                    controller: MyApp.Controllers.UserController,
                     controllerAs: 'controller'
                 }
             },
@@ -145,515 +145,6 @@ var MyApp;
     });
 })(MyApp || (MyApp = {}));
 /// <reference path="ngapp/app.ts" />
-var MyApp;
-(function (MyApp) {
-    var Controllers;
-    (function (Controllers) {
-        var AboutController = (function () {
-            function AboutController() {
-            }
-            return AboutController;
-        }());
-        Controllers.AboutController = AboutController;
-    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Controllers;
-    (function (Controllers) {
-        var AccountController = (function () {
-            function AccountController(accountService, $location, $uibModal, $stateParams) {
-                var _this = this;
-                this.accountService = accountService;
-                this.$location = $location;
-                this.$uibModal = $uibModal;
-                this.$stateParams = $stateParams;
-                this.getExternalLogins().then(function (results) {
-                    _this.externalLogins = results;
-                });
-            }
-            AccountController.prototype.getUserId = function () {
-                return this.accountService.getUserId();
-            };
-            AccountController.prototype.getUserName = function () {
-                return this.accountService.getUserName();
-            };
-            AccountController.prototype.getClaim = function (type) {
-                return this.accountService.getClaim(type);
-            };
-            AccountController.prototype.isLoggedIn = function () {
-                return this.accountService.isLoggedIn();
-            };
-            AccountController.prototype.logout = function () {
-                this.accountService.logout();
-                this.$location.path('/');
-            };
-            AccountController.prototype.getExternalLogins = function () {
-                return this.accountService.getExternalLogins();
-            };
-            AccountController.prototype.showSignInModal = function (x) {
-                this.$uibModal.open({
-                    templateUrl: '/ngApp/views/modalViews/loginPage.html',
-                    controller: MyApp.Controllers.LoginController,
-                    controllerAs: 'controller',
-                    resolve: {
-                        x: function () { return x; },
-                    },
-                    size: 'lg'
-                });
-            };
-            AccountController.prototype.showSignUpModal = function (x) {
-                this.$uibModal.open({
-                    templateUrl: '/ngApp/views/modalViews/signUp.html',
-                    controller: MyApp.Controllers.RegisterController,
-                    controllerAs: 'controller',
-                    resolve: {
-                        x: function () { return x; },
-                    },
-                    size: 'lg'
-                });
-            };
-            return AccountController;
-        }());
-        Controllers.AccountController = AccountController;
-        angular.module('MyApp').controller('AccountController', AccountController);
-        var LoginController = (function () {
-            function LoginController(accountService, $state, $location, $uibModalInstance, x, $stateParams) {
-                this.accountService = accountService;
-                this.$state = $state;
-                this.$location = $location;
-                this.$uibModalInstance = $uibModalInstance;
-                this.x = x;
-                this.$stateParams = $stateParams;
-            }
-            LoginController.prototype.login = function () {
-                var _this = this;
-                this.accountService.login(this.loginUser).then(function () {
-                    _this.$location.path('/');
-                    _this.ok();
-                }).catch(function (results) {
-                    _this.validationMessages = results;
-                });
-            };
-            LoginController.prototype.ok = function () {
-                this.$uibModalInstance.close();
-            };
-            return LoginController;
-        }());
-        Controllers.LoginController = LoginController;
-        var RegisterController = (function () {
-            function RegisterController(accountService, $location, $uibModalInstance, $state) {
-                this.accountService = accountService;
-                this.$location = $location;
-                this.$uibModalInstance = $uibModalInstance;
-                this.$state = $state;
-            }
-            RegisterController.prototype.register = function () {
-                var _this = this;
-                debugger;
-                this.accountService.register(this.registerUser).then(function () {
-                    _this.$location.path('/');
-                    _this.ok();
-                }).catch(function (results) {
-                    _this.validationMessages = results;
-                });
-            };
-            RegisterController.prototype.ok = function () {
-                this.$uibModalInstance.close();
-            };
-            return RegisterController;
-        }());
-        Controllers.RegisterController = RegisterController;
-        var ExternalRegisterController = (function () {
-            function ExternalRegisterController(accountService, $location) {
-                this.accountService = accountService;
-                this.$location = $location;
-            }
-            ExternalRegisterController.prototype.register = function () {
-                var _this = this;
-                this.accountService.registerExternal(this.registerUser.email)
-                    .then(function (result) {
-                    _this.$location.path('/');
-                }).catch(function (result) {
-                    _this.validationMessages = result;
-                });
-            };
-            return ExternalRegisterController;
-        }());
-        Controllers.ExternalRegisterController = ExternalRegisterController;
-        var ConfirmEmailController = (function () {
-            function ConfirmEmailController(accountService, $http, $stateParams, $location) {
-                var _this = this;
-                this.accountService = accountService;
-                this.$http = $http;
-                this.$stateParams = $stateParams;
-                this.$location = $location;
-                var userId = $stateParams['userId'];
-                var code = $stateParams['code'];
-                accountService.confirmEmail(userId, code)
-                    .then(function (result) {
-                    _this.$location.path('/');
-                }).catch(function (result) {
-                    _this.validationMessages = result;
-                });
-            }
-            return ConfirmEmailController;
-        }());
-        Controllers.ConfirmEmailController = ConfirmEmailController;
-    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Controllers;
-    (function (Controllers) {
-        var CreateDiscussionController = (function () {
-            function CreateDiscussionController(discussionService, $state) {
-                this.discussionService = discussionService;
-                this.$state = $state;
-            }
-            CreateDiscussionController.prototype.saveNewDisc = function () {
-                var _this = this;
-                this.discussionService.saveDiscussion(this.discToCreate).then(function () {
-                    _this.$state.go('discussion');
-                });
-            };
-            return CreateDiscussionController;
-        }());
-        Controllers.CreateDiscussionController = CreateDiscussionController;
-    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Controllers;
-    (function (Controllers) {
-        var CreatePostController = (function () {
-            function CreatePostController(postsService, accountService, $state, $stateParams) {
-                this.postsService = postsService;
-                this.accountService = accountService;
-                this.$state = $state;
-                this.$stateParams = $stateParams;
-                debugger;
-                this.discussionId = this.$stateParams['id'];
-                this.userId = accountService.getUserId();
-                this.discIdUserId = this.discussionId + " " + this.userId;
-            }
-            CreatePostController.prototype.savePost = function () {
-                var _this = this;
-                debugger;
-                this.postsService.savePost(this.discIdUserId, this.postToCreate).then(function () {
-                    _this.$state.go('discussion');
-                });
-            };
-            return CreatePostController;
-        }());
-        Controllers.CreatePostController = CreatePostController;
-        var EditPostController = (function () {
-            function EditPostController(postsService, accountService, $state, $stateParams) {
-                this.postsService = postsService;
-                this.accountService = accountService;
-                this.$state = $state;
-                this.$stateParams = $stateParams;
-                this.discussionId = this.$stateParams['id'];
-                this.postToEdit = this.postsService.getPost(this.$stateParams['id']);
-                this.userId = this.accountService.getUserName();
-            }
-            return EditPostController;
-        }());
-        Controllers.EditPostController = EditPostController;
-    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Controllers;
-    (function (Controllers) {
-        var DiscussionController = (function () {
-            function DiscussionController(discussionService, $stateParams) {
-                this.discussionService = discussionService;
-                this.$stateParams = $stateParams;
-                this.getDiscussion();
-            }
-            DiscussionController.prototype.getDiscussion = function () {
-                var discId = this.$stateParams['id'];
-                this.discussion = this.discussionService.getDiscussion(discId);
-            };
-            return DiscussionController;
-        }());
-        Controllers.DiscussionController = DiscussionController;
-        var DeleteDiscussionController = (function () {
-            function DeleteDiscussionController(discussionService, $stateParams, $state) {
-                this.discussionService = discussionService;
-                this.$stateParams = $stateParams;
-                this.$state = $state;
-            }
-            DeleteDiscussionController.prototype.deleteDisc = function () {
-                var _this = this;
-                this.discussionService.deleteDiscussion(this.$stateParams['id']).then(function () {
-                    _this.$state.go('discussion');
-                });
-            };
-            DeleteDiscussionController.prototype.cancel = function () {
-                this.$state.go("discussion");
-            };
-            return DeleteDiscussionController;
-        }());
-        Controllers.DeleteDiscussionController = DeleteDiscussionController;
-        var EditDiscussionController = (function () {
-            function EditDiscussionController(discussionService, $stateParams, $state) {
-                this.discussionService = discussionService;
-                this.$stateParams = $stateParams;
-                this.$state = $state;
-                this.discToEdit = this.discussionService.getDiscussion(this.$stateParams['id']);
-            }
-            EditDiscussionController.prototype.editDisc = function () {
-                var _this = this;
-                debugger;
-                this.discussionService.saveDiscussion(this.discToEdit).then(function () {
-                    _this.$state.go("discussion");
-                });
-            };
-            return EditDiscussionController;
-        }());
-        Controllers.EditDiscussionController = EditDiscussionController;
-    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Controllers;
-    (function (Controllers) {
-        var HomeController = (function () {
-            function HomeController() {
-            }
-            return HomeController;
-        }());
-        Controllers.HomeController = HomeController;
-        var TestModalController = (function () {
-            function TestModalController($uibModal, $stateParams, $state) {
-                this.$uibModal = $uibModal;
-                this.$stateParams = $stateParams;
-                this.$state = $state;
-            }
-            TestModalController.prototype.showSignInModal = function (x) {
-                this.$uibModal.open({
-                    templateUrl: '/ngApp/views/modalViews/loginPage.html',
-                    controller: MyApp.Controllers.LoginController,
-                    controllerAs: 'controller',
-                    resolve: {
-                        x: function () { return x; },
-                    },
-                    size: 'lg'
-                });
-            };
-            TestModalController.prototype.showSignUpModal = function (x) {
-                this.$uibModal.open({
-                    templateUrl: '/ngApp/views/modalViews/signUp.html',
-                    controller: MyApp.Controllers.RegisterController,
-                    controllerAs: 'controller',
-                    resolve: {
-                        x: function () { return x; },
-                    },
-                    size: 'lg'
-                });
-            };
-            TestModalController.prototype.cancel = function () {
-                this.$state.go('/');
-            };
-            return TestModalController;
-        }());
-        Controllers.TestModalController = TestModalController;
-        angular.module("MyApp").controller("TestModalController", TestModalController);
-    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Controllers;
-    (function (Controllers) {
-        var MainDiscussionPageController = (function () {
-            function MainDiscussionPageController(discussionService) {
-                this.discussionService = discussionService;
-                this.interests = this.discussionService.getDiscussions();
-            }
-            return MainDiscussionPageController;
-        }());
-        Controllers.MainDiscussionPageController = MainDiscussionPageController;
-    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Controllers;
-    (function (Controllers) {
-        var CreateMessageController = (function () {
-            function CreateMessageController(messageService, accountService, $state, $stateParams) {
-                this.messageService = messageService;
-                this.accountService = accountService;
-                this.$state = $state;
-                this.$stateParams = $stateParams;
-                this.postId = this.$stateParams['id'];
-                this.userId = accountService.getUserId();
-                this.postIdUserId = this.postId + " " + this.userId;
-            }
-            CreateMessageController.prototype.saveMsg = function () {
-                var _this = this;
-                debugger;
-                this.messageService.saveMsg(this.postIdUserId, this.msgToCreate).then(function () {
-                    _this.$state.go('discussion');
-                });
-            };
-            return CreateMessageController;
-        }());
-        Controllers.CreateMessageController = CreateMessageController;
-        var EditMsgController = (function () {
-            function EditMsgController(messageService, $state, $stateParams) {
-                this.messageService = messageService;
-                this.$state = $state;
-                this.$stateParams = $stateParams;
-                this.postId = this.$stateParams['id'];
-                this.msgToEdit = this.messageService.getMessage(this.$stateParams['id']);
-            }
-            return EditMsgController;
-        }());
-        Controllers.EditMsgController = EditMsgController;
-        var DeleteMsgController = (function () {
-            function DeleteMsgController(messageService, $stateParams, $state) {
-                this.messageService = messageService;
-                this.$stateParams = $stateParams;
-                this.$state = $state;
-                this.postId = this.$stateParams['id'];
-            }
-            DeleteMsgController.prototype.deleteMsg = function () {
-                var _this = this;
-                this.messageService.deleteMsg(this.$stateParams['id']).then(function () {
-                    debugger;
-                    _this.$state.go('messages', { id: _this.postId });
-                });
-            };
-            DeleteMsgController.prototype.cancel = function () {
-                this.$state.go("messages", { id: this.postId });
-            };
-            return DeleteMsgController;
-        }());
-        Controllers.DeleteMsgController = DeleteMsgController;
-    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Controllers;
-    (function (Controllers) {
-        var PostController = (function () {
-            function PostController(postsService, $stateParams, $state) {
-                this.postsService = postsService;
-                this.$stateParams = $stateParams;
-                this.$state = $state;
-                this.getPost();
-            }
-            PostController.prototype.getPost = function () {
-                var postId = this.$stateParams['id'];
-                this.post = this.postsService.getPost(postId);
-            };
-            return PostController;
-        }());
-        Controllers.PostController = PostController;
-        var DeletePostController = (function () {
-            function DeletePostController(postsService, $stateParams, $state) {
-                this.postsService = postsService;
-                this.$stateParams = $stateParams;
-                this.$state = $state;
-                this.discId = this.$stateParams['id'];
-            }
-            DeletePostController.prototype.deletePost = function () {
-                var _this = this;
-                this.postsService.deletePost(this.$stateParams['id']).then(function () {
-                    _this.$state.go('discussions', { id: 8004 });
-                });
-            };
-            DeletePostController.prototype.cancel = function () {
-                this.$state.go('discussions');
-            };
-            return DeletePostController;
-        }());
-        Controllers.DeletePostController = DeletePostController;
-    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Controllers;
-    (function (Controllers) {
-        var InnerProfileController = (function () {
-            function InnerProfileController() {
-            }
-            return InnerProfileController;
-        }());
-        Controllers.InnerProfileController = InnerProfileController;
-        var EventsViewController = (function () {
-            function EventsViewController() {
-            }
-            return EventsViewController;
-        }());
-        Controllers.EventsViewController = EventsViewController;
-    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Controllers;
-    (function (Controllers) {
-        var UsersController = (function () {
-            function UsersController(userService) {
-                this.userService = userService;
-                this.users = this.userService.getUsers();
-            }
-            return UsersController;
-        }());
-        Controllers.UsersController = UsersController;
-        var UserController = (function () {
-            function UserController(userService, accountService, messageService, postsService, $stateParams, $state, $uibModal, filepickerService, $scope) {
-                this.userService = userService;
-                this.accountService = accountService;
-                this.messageService = messageService;
-                this.postsService = postsService;
-                this.$stateParams = $stateParams;
-                this.$state = $state;
-                this.$uibModal = $uibModal;
-                this.filepickerService = filepickerService;
-                this.$scope = $scope;
-                this.getUser();
-            }
-            UserController.prototype.getUser = function () {
-                debugger;
-                this.userId = this.$stateParams['id'];
-                this.user = this.userService.getUser(this.userId);
-                console.log(this.user);
-            };
-            UserController.prototype.pickFile = function () {
-                this.filepickerService.pick({
-                    mimetype: 'image/*',
-                }, this.fileUploaded.bind(this));
-            };
-            UserController.prototype.fileUploaded = function (file) {
-                this.file = file;
-                this.$scope.$apply();
-                this.image = file.url;
-            };
-            return UserController;
-        }());
-        Controllers.UserController = UserController;
-        var EditUserController = (function () {
-            function EditUserController($stateParams, $state, userService, $uibModalInstance, id) {
-                this.$stateParams = $stateParams;
-                this.$state = $state;
-                this.userService = userService;
-                this.$uibModalInstance = $uibModalInstance;
-                this.id = id;
-                this.userId = this.id;
-                this.user = this.userService.getUser(this.userId);
-            }
-            EditUserController.prototype.editUser = function () {
-                this.userService.updateUser(this.user);
-                this.$state.reload();
-            };
-            return EditUserController;
-        }());
-        Controllers.EditUserController = EditUserController;
-    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
 var MyApp;
 (function (MyApp) {
     var Services;
@@ -895,5 +386,547 @@ var MyApp;
         Services.UserService = UserService;
         angular.module("MyApp").service("userService", UserService);
     })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var AboutController = (function () {
+            function AboutController() {
+            }
+            return AboutController;
+        }());
+        Controllers.AboutController = AboutController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var AccountController = (function () {
+            function AccountController(accountService, $location, $uibModal, $stateParams) {
+                var _this = this;
+                this.accountService = accountService;
+                this.$location = $location;
+                this.$uibModal = $uibModal;
+                this.$stateParams = $stateParams;
+                this.getExternalLogins().then(function (results) {
+                    _this.externalLogins = results;
+                });
+            }
+            AccountController.prototype.getUserId = function () {
+                return this.accountService.getUserId();
+            };
+            AccountController.prototype.getUserName = function () {
+                return this.accountService.getUserName();
+            };
+            AccountController.prototype.getClaim = function (type) {
+                return this.accountService.getClaim(type);
+            };
+            AccountController.prototype.isLoggedIn = function () {
+                return this.accountService.isLoggedIn();
+            };
+            AccountController.prototype.logout = function () {
+                this.accountService.logout();
+                this.$location.path('/');
+            };
+            AccountController.prototype.getExternalLogins = function () {
+                return this.accountService.getExternalLogins();
+            };
+            AccountController.prototype.showSignInModal = function (x) {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/modalViews/loginPage.html',
+                    controller: MyApp.Controllers.LoginController,
+                    controllerAs: 'controller',
+                    resolve: {
+                        x: function () { return x; },
+                    },
+                    size: 'lg'
+                });
+            };
+            AccountController.prototype.showSignUpModal = function (x) {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/modalViews/signUp.html',
+                    controller: MyApp.Controllers.RegisterController,
+                    controllerAs: 'controller',
+                    resolve: {
+                        x: function () { return x; },
+                    },
+                    size: 'lg'
+                });
+            };
+            return AccountController;
+        }());
+        Controllers.AccountController = AccountController;
+        angular.module('MyApp').controller('AccountController', AccountController);
+        var LoginController = (function () {
+            function LoginController(accountService, $state, $location, $uibModalInstance, x, $stateParams) {
+                this.accountService = accountService;
+                this.$state = $state;
+                this.$location = $location;
+                this.$uibModalInstance = $uibModalInstance;
+                this.x = x;
+                this.$stateParams = $stateParams;
+            }
+            LoginController.prototype.login = function () {
+                var _this = this;
+                this.accountService.login(this.loginUser).then(function () {
+                    _this.$location.path('/');
+                    _this.ok();
+                }).catch(function (results) {
+                    _this.validationMessages = results;
+                });
+            };
+            LoginController.prototype.ok = function () {
+                this.$uibModalInstance.close();
+            };
+            return LoginController;
+        }());
+        Controllers.LoginController = LoginController;
+        var RegisterController = (function () {
+            function RegisterController(accountService, $location, $uibModalInstance, $state) {
+                this.accountService = accountService;
+                this.$location = $location;
+                this.$uibModalInstance = $uibModalInstance;
+                this.$state = $state;
+            }
+            RegisterController.prototype.register = function () {
+                var _this = this;
+                debugger;
+                this.accountService.register(this.registerUser).then(function () {
+                    _this.$location.path('/');
+                    _this.ok();
+                }).catch(function (results) {
+                    _this.validationMessages = results;
+                });
+            };
+            RegisterController.prototype.ok = function () {
+                this.$uibModalInstance.close();
+            };
+            return RegisterController;
+        }());
+        Controllers.RegisterController = RegisterController;
+        var ExternalRegisterController = (function () {
+            function ExternalRegisterController(accountService, $location) {
+                this.accountService = accountService;
+                this.$location = $location;
+            }
+            ExternalRegisterController.prototype.register = function () {
+                var _this = this;
+                this.accountService.registerExternal(this.registerUser.email)
+                    .then(function (result) {
+                    _this.$location.path('/');
+                }).catch(function (result) {
+                    _this.validationMessages = result;
+                });
+            };
+            return ExternalRegisterController;
+        }());
+        Controllers.ExternalRegisterController = ExternalRegisterController;
+        var ConfirmEmailController = (function () {
+            function ConfirmEmailController(accountService, $http, $stateParams, $location) {
+                var _this = this;
+                this.accountService = accountService;
+                this.$http = $http;
+                this.$stateParams = $stateParams;
+                this.$location = $location;
+                var userId = $stateParams['userId'];
+                var code = $stateParams['code'];
+                accountService.confirmEmail(userId, code)
+                    .then(function (result) {
+                    _this.$location.path('/');
+                }).catch(function (result) {
+                    _this.validationMessages = result;
+                });
+            }
+            return ConfirmEmailController;
+        }());
+        Controllers.ConfirmEmailController = ConfirmEmailController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var CreateDiscussionController = (function () {
+            function CreateDiscussionController(discussionService, $state) {
+                this.discussionService = discussionService;
+                this.$state = $state;
+            }
+            CreateDiscussionController.prototype.saveNewDisc = function () {
+                var _this = this;
+                this.discussionService.saveDiscussion(this.discToCreate).then(function () {
+                    _this.$state.go('discussion');
+                });
+            };
+            return CreateDiscussionController;
+        }());
+        Controllers.CreateDiscussionController = CreateDiscussionController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var CreatePostController = (function () {
+            function CreatePostController(postsService, accountService, $state, $stateParams, $uibModalInstance, id) {
+                this.postsService = postsService;
+                this.accountService = accountService;
+                this.$state = $state;
+                this.$stateParams = $stateParams;
+                this.$uibModalInstance = $uibModalInstance;
+                this.id = id;
+                this.discussionId = this.$stateParams['id'];
+                this.userId = accountService.getUserId();
+                this.discIdUserId = this.discussionId + " " + this.userId;
+            }
+            CreatePostController.prototype.ok = function () {
+                this.$uibModalInstance.close();
+            };
+            CreatePostController.prototype.savePost = function () {
+                var _this = this;
+                this.postsService.savePost(this.discIdUserId, this.postToCreate).then(function () {
+                    _this.ok();
+                    _this.$state.reload();
+                });
+            };
+            return CreatePostController;
+        }());
+        Controllers.CreatePostController = CreatePostController;
+        var EditPostController = (function () {
+            function EditPostController(postsService, accountService, $state, $stateParams) {
+                this.postsService = postsService;
+                this.accountService = accountService;
+                this.$state = $state;
+                this.$stateParams = $stateParams;
+                this.discussionId = this.$stateParams['id'];
+                this.postToEdit = this.postsService.getPost(this.$stateParams['id']);
+                this.userId = this.accountService.getUserName();
+            }
+            return EditPostController;
+        }());
+        Controllers.EditPostController = EditPostController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var DiscussionController = (function () {
+            function DiscussionController(discussionService, $stateParams, $uibModal) {
+                this.discussionService = discussionService;
+                this.$stateParams = $stateParams;
+                this.$uibModal = $uibModal;
+                this.getDiscussion();
+            }
+            DiscussionController.prototype.getDiscussion = function () {
+                var discId = this.$stateParams['id'];
+                this.discussion = this.discussionService.getDiscussion(discId);
+            };
+            DiscussionController.prototype.addPostModal = function (id) {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/createPost.html',
+                    controller: MyApp.Controllers.CreatePostController,
+                    controllerAs: 'controller',
+                    resolve: {
+                        id: function () { return id; },
+                    },
+                    size: 'md'
+                });
+            };
+            return DiscussionController;
+        }());
+        Controllers.DiscussionController = DiscussionController;
+        var DeleteDiscussionController = (function () {
+            function DeleteDiscussionController(discussionService, $stateParams, $state) {
+                this.discussionService = discussionService;
+                this.$stateParams = $stateParams;
+                this.$state = $state;
+            }
+            DeleteDiscussionController.prototype.deleteDisc = function () {
+                var _this = this;
+                this.discussionService.deleteDiscussion(this.$stateParams['id']).then(function () {
+                    _this.$state.go('discussion');
+                });
+            };
+            DeleteDiscussionController.prototype.cancel = function () {
+                this.$state.go("discussion");
+            };
+            return DeleteDiscussionController;
+        }());
+        Controllers.DeleteDiscussionController = DeleteDiscussionController;
+        var EditDiscussionController = (function () {
+            function EditDiscussionController(discussionService, $stateParams, $state) {
+                this.discussionService = discussionService;
+                this.$stateParams = $stateParams;
+                this.$state = $state;
+                this.discToEdit = this.discussionService.getDiscussion(this.$stateParams['id']);
+            }
+            EditDiscussionController.prototype.editDisc = function () {
+                var _this = this;
+                debugger;
+                this.discussionService.saveDiscussion(this.discToEdit).then(function () {
+                    _this.$state.go("discussion");
+                });
+            };
+            return EditDiscussionController;
+        }());
+        Controllers.EditDiscussionController = EditDiscussionController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var HomeController = (function () {
+            function HomeController() {
+            }
+            return HomeController;
+        }());
+        Controllers.HomeController = HomeController;
+        var TestModalController = (function () {
+            function TestModalController($uibModal, $stateParams, $state) {
+                this.$uibModal = $uibModal;
+                this.$stateParams = $stateParams;
+                this.$state = $state;
+            }
+            TestModalController.prototype.showSignInModal = function (x) {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/modalViews/loginPage.html',
+                    controller: MyApp.Controllers.LoginController,
+                    controllerAs: 'controller',
+                    resolve: {
+                        x: function () { return x; },
+                    },
+                    size: 'lg'
+                });
+            };
+            TestModalController.prototype.showSignUpModal = function (x) {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/modalViews/signUp.html',
+                    controller: MyApp.Controllers.RegisterController,
+                    controllerAs: 'controller',
+                    resolve: {
+                        x: function () { return x; },
+                    },
+                    size: 'lg'
+                });
+            };
+            TestModalController.prototype.cancel = function () {
+                this.$state.go('/');
+            };
+            return TestModalController;
+        }());
+        Controllers.TestModalController = TestModalController;
+        angular.module("MyApp").controller("TestModalController", TestModalController);
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var MainDiscussionPageController = (function () {
+            function MainDiscussionPageController(discussionService) {
+                this.discussionService = discussionService;
+                this.interests = this.discussionService.getDiscussions();
+            }
+            return MainDiscussionPageController;
+        }());
+        Controllers.MainDiscussionPageController = MainDiscussionPageController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var CreateMessageController = (function () {
+            function CreateMessageController(messageService, accountService, $state, $stateParams, $uibModalInstance, id) {
+                this.messageService = messageService;
+                this.accountService = accountService;
+                this.$state = $state;
+                this.$stateParams = $stateParams;
+                this.$uibModalInstance = $uibModalInstance;
+                this.id = id;
+                this.postId = this.$stateParams['id'];
+                this.userId = accountService.getUserId();
+                this.postIdUserId = this.postId + " " + this.userId;
+            }
+            CreateMessageController.prototype.ok = function () {
+                this.$uibModalInstance.close();
+            };
+            CreateMessageController.prototype.saveMsg = function () {
+                var _this = this;
+                this.messageService.saveMsg(this.postIdUserId, this.msgToCreate).then(function () {
+                    _this.ok();
+                    _this.$state.reload();
+                });
+            };
+            return CreateMessageController;
+        }());
+        Controllers.CreateMessageController = CreateMessageController;
+        var EditMsgController = (function () {
+            function EditMsgController(messageService, $state, $stateParams) {
+                this.messageService = messageService;
+                this.$state = $state;
+                this.$stateParams = $stateParams;
+                this.postId = this.$stateParams['id'];
+                this.msgToEdit = this.messageService.getMessage(this.$stateParams['id']);
+            }
+            return EditMsgController;
+        }());
+        Controllers.EditMsgController = EditMsgController;
+        var DeleteMsgController = (function () {
+            function DeleteMsgController(messageService, $stateParams, $state) {
+                this.messageService = messageService;
+                this.$stateParams = $stateParams;
+                this.$state = $state;
+                this.postId = this.$stateParams['id'];
+            }
+            DeleteMsgController.prototype.deleteMsg = function () {
+                var _this = this;
+                this.messageService.deleteMsg(this.$stateParams['id']).then(function () {
+                    debugger;
+                    _this.$state.go('messages', { id: _this.postId });
+                });
+            };
+            DeleteMsgController.prototype.cancel = function () {
+                this.$state.go("messages", { id: this.postId });
+            };
+            return DeleteMsgController;
+        }());
+        Controllers.DeleteMsgController = DeleteMsgController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var PostController = (function () {
+            function PostController(postsService, $stateParams, $state, $uibModal) {
+                this.postsService = postsService;
+                this.$stateParams = $stateParams;
+                this.$state = $state;
+                this.$uibModal = $uibModal;
+                this.getPost();
+            }
+            PostController.prototype.addMsgModal = function (id) {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/createMessage.html',
+                    controller: MyApp.Controllers.CreateMessageController,
+                    controllerAs: 'controller',
+                    resolve: {
+                        id: function () { return id; },
+                    },
+                    size: 'md'
+                });
+            };
+            PostController.prototype.getPost = function () {
+                var postId = this.$stateParams['id'];
+                this.post = this.postsService.getPost(postId);
+            };
+            return PostController;
+        }());
+        Controllers.PostController = PostController;
+        var DeletePostController = (function () {
+            function DeletePostController(postsService, $stateParams, $state) {
+                this.postsService = postsService;
+                this.$stateParams = $stateParams;
+                this.$state = $state;
+                this.discId = this.$stateParams['id'];
+            }
+            DeletePostController.prototype.deletePost = function () {
+                var _this = this;
+                this.postsService.deletePost(this.$stateParams['id']).then(function () {
+                    _this.$state.go('discussions', { id: 8004 });
+                });
+            };
+            DeletePostController.prototype.cancel = function () {
+                this.$state.go('discussions');
+            };
+            return DeletePostController;
+        }());
+        Controllers.DeletePostController = DeletePostController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var InnerProfileController = (function () {
+            function InnerProfileController() {
+            }
+            return InnerProfileController;
+        }());
+        Controllers.InnerProfileController = InnerProfileController;
+        var EventsViewController = (function () {
+            function EventsViewController() {
+            }
+            return EventsViewController;
+        }());
+        Controllers.EventsViewController = EventsViewController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var UsersController = (function () {
+            function UsersController(userService) {
+                this.userService = userService;
+                this.users = this.userService.getUsers();
+            }
+            return UsersController;
+        }());
+        Controllers.UsersController = UsersController;
+        var UserController = (function () {
+            function UserController(userService, accountService, messageService, postsService, $stateParams, $state, $uibModal, filepickerService, $scope) {
+                this.userService = userService;
+                this.accountService = accountService;
+                this.messageService = messageService;
+                this.postsService = postsService;
+                this.$stateParams = $stateParams;
+                this.$state = $state;
+                this.$uibModal = $uibModal;
+                this.filepickerService = filepickerService;
+                this.$scope = $scope;
+                this.getUser();
+            }
+            UserController.prototype.getUser = function () {
+                debugger;
+                this.userId = this.$stateParams['id'];
+                this.user = this.userService.getUser(this.userId);
+                console.log(this.user);
+            };
+            UserController.prototype.pickFile = function () {
+                this.filepickerService.pick({
+                    mimetype: 'image/*',
+                }, this.fileUploaded.bind(this));
+            };
+            UserController.prototype.fileUploaded = function (file) {
+                this.file = file;
+                this.$scope.$apply();
+                this.image = file.url;
+            };
+            return UserController;
+        }());
+        Controllers.UserController = UserController;
+        var EditUserController = (function () {
+            function EditUserController($stateParams, $state, userService, $uibModalInstance, id) {
+                this.$stateParams = $stateParams;
+                this.$state = $state;
+                this.userService = userService;
+                this.$uibModalInstance = $uibModalInstance;
+                this.id = id;
+                this.userId = this.id;
+                this.user = this.userService.getUser(this.userId);
+            }
+            EditUserController.prototype.editUser = function () {
+                this.userService.updateUser(this.user);
+                this.$state.reload();
+            };
+            return EditUserController;
+        }());
+        Controllers.EditUserController = EditUserController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
 })(MyApp || (MyApp = {}));
 //# sourceMappingURL=all.js.map

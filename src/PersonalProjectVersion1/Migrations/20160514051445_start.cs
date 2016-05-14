@@ -156,6 +156,10 @@ namespace PersonalProjectVersion1.Migrations
                     Content = table.Column<string>(nullable: true),
                     DiscussionId = table.Column<int>(nullable: true),
                     IsViewable = table.Column<bool>(nullable: false),
+                    PostFirst = table.Column<string>(nullable: true),
+                    PostImage = table.Column<string>(nullable: true),
+                    PostLast = table.Column<string>(nullable: true),
+                    PostUserName = table.Column<string>(nullable: true),
                     TimeCreated = table.Column<DateTime>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
@@ -185,6 +189,10 @@ namespace PersonalProjectVersion1.Migrations
                     ApplicationUserId = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
                     IsViewable = table.Column<bool>(nullable: false),
+                    MsgFirst = table.Column<string>(nullable: true),
+                    MsgImage = table.Column<string>(nullable: true),
+                    MsgLast = table.Column<string>(nullable: true),
+                    MsgUserName = table.Column<string>(nullable: true),
                     PostId = table.Column<int>(nullable: true),
                     TimeCreated = table.Column<DateTime>(nullable: false)
                 },

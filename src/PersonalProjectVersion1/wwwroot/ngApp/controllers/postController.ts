@@ -6,8 +6,24 @@
         constructor(
             private postsService: MyApp.Services.PostsService,
             private $stateParams: ng.ui.IStateParamsService,
-            private $state: ng.ui.IStateService) {
+            private $state: ng.ui.IStateService,
+            private $uibModal: ng.ui.bootstrap.IModalService) {
             this.getPost();
+        }
+
+        public addMsgModal(id) {
+
+            this.$uibModal.open({
+                templateUrl: '/ngApp/views/createMessage.html',
+                controller: MyApp.Controllers.CreateMessageController,
+                controllerAs: 'controller',
+                resolve: {
+                    id: () => id,
+
+                },
+                size: 'md'
+            });
+
         }
 
         getPost() {

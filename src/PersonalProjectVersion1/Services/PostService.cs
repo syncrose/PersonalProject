@@ -21,12 +21,13 @@ namespace PersonalProjectVersion1.Services
         public List<Post> GetPosts()
         {
             var data = _repo.Query<Post>().ToList();
+            
             return data;
         }
 
         public Post getPost(int Id)
         {
-            var data = _repo.Query<Post>().Where(p => p.Id == Id).Include(p => p.LinkedMessages).FirstOrDefault();
+            var data = _repo.Query<Post>().Where(p => p.Id == Id).Include(p => p.LinkedMessages.OrderBy(t => t.TimeCreated)).FirstOrDefault();
             return data;
         }
 
@@ -37,7 +38,10 @@ namespace PersonalProjectVersion1.Services
             post.TimeCreated = DateTime.Now;
             var user = _repo.Query<ApplicationUser>().Where(u => u.Id == userId).Include(u => u.UserPosts).FirstOrDefault();
             user.UserPosts.Add(post);
-            
+            post.PostImage = user.Image;
+            post.PostFirst = user.First;
+            post.PostLast = user.Last;
+            post.PostUserName = user.UserName;
             disc.LinkedPosts.Add(post);
           
             _repo.Add(post);

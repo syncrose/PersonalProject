@@ -9,20 +9,22 @@
         constructor(private messageService: MyApp.Services.MessageService,
             private accountService: MyApp.Services.AccountService,
             private $state: ng.ui.IStateService,
-            private $stateParams: ng.ui.IStateParamsService
-           
-        ) {
+            private $stateParams: ng.ui.IStateParamsService,
+            private $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
+            private id) {
             this.postId = this.$stateParams['id'];
             this.userId = accountService.getUserId();
             this.postIdUserId = this.postId + " " + this.userId;
         }
 
-   
+        public ok() {
+            this.$uibModalInstance.close();
+        }
 
         saveMsg() {
-            debugger;
             this.messageService.saveMsg(this.postIdUserId, this.msgToCreate).then(() => {
-                this.$state.go('discussion');
+                this.ok();
+                this.$state.reload();
             });
         }
     }
