@@ -26,6 +26,36 @@
 
         }
 
+        public deleteMsgModal(id) {
+
+            this.$uibModal.open({
+                templateUrl: '/ngApp/views/deleteMsg.html',
+                controller: MyApp.Controllers.DeleteMsgController,
+                controllerAs: 'controller',
+                resolve: {
+                    id: () => id,
+
+                },
+                size: 'md'
+            });
+
+        }
+
+        public editMsgModal(id) {
+
+            this.$uibModal.open({
+                templateUrl: '/ngApp/views/editMsg.html',
+                controller: MyApp.Controllers.EditMsgController,
+                controllerAs: 'controller',
+                resolve: {
+                    id: () => id,
+
+                },
+                size: 'md'
+            });
+
+        }
+
         getPost() {
             let postId = this.$stateParams['id'];
             this.post = this.postsService.getPost(postId);
@@ -43,13 +73,20 @@
         constructor(
             private postsService: MyApp.Services.PostsService,
             private $stateParams: ng.ui.IStateParamsService,
-            private $state: ng.ui.IStateService) {
+            private $state: ng.ui.IStateService,
+            private $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
+            private id        ) {
             this.discId = this.$stateParams['id'];
+        }
+
+        public ok() {
+            this.$uibModalInstance.close();
         }
 
         deletePost() {
             this.postsService.deletePost(this.$stateParams['id']).then(() => {
-                this.$state.go('discussions', { id: 8004 });
+                this.ok();
+                this.$state.reload();
             });
         }
 

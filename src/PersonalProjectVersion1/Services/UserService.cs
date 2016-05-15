@@ -61,6 +61,18 @@ namespace PersonalProjectVersion1.Services
             return vm;
         }
 
+        public List<Post> getUserPosts(string userName)
+        {
+            var posts = _repo.Query<Post>().Where(u => u.PostUserName == userName).ToList();
+            return posts;
+        }
+
+        public List<Message> getUserMessages(string userName)
+        {
+            var messages = _repo.Query<Message>().Where(u => u.MsgUserName == userName).ToList();
+            return messages;
+        }
+
         public void UpdateUser(UserVM user)
         {
             var originUser = _repo.Query<ApplicationUser>().Where(u => u.Id == user.Id).FirstOrDefault();

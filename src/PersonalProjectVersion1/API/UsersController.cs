@@ -24,7 +24,7 @@ namespace PersonalProjectVersion1.API
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok( _repo.getUsers());
+            return Ok(_repo.getUsers());
         }
 
         // GET api/values/5
@@ -32,6 +32,22 @@ namespace PersonalProjectVersion1.API
         public IActionResult Get(string id)
         {
             return Ok(_repo.getUser(id));
+        }
+
+        [HttpGet]
+        [Route("userPosts")]
+        public IActionResult getUserPosts(string userName)
+        {
+            var userPosts = _repo.getUserPosts(userName);
+            return Ok(userPosts);
+        }
+
+        [HttpGet]
+        [Route("userMsgs")]
+        public IActionResult getUserMsgs(string userName)
+        {
+            var userMsgs = _repo.getUserMessages(userName);
+            return Ok(userMsgs);
         }
 
         // POST api/values

@@ -37,6 +37,10 @@ namespace PersonalProjectVersion1.Services
             var user = _repo.Query<ApplicationUser>().Where(u => u.Id == userId).Include(u => u.UserMessages).FirstOrDefault();
             user.UserMessages.Add(msg);
             msg.TimeCreated = DateTime.Now;
+            msg.MsgFirst = user.First;
+            msg.MsgLast = user.Last;
+            msg.MsgUserName = user.UserName;
+            msg.MsgImage = user.Image;
             _repo.Add(msg);
             post.LinkedMessages.Add(msg);
             _repo.SaveChanges();

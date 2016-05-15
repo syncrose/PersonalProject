@@ -31,6 +31,36 @@
 
         }
 
+        public deletePostModal(id) {
+
+            this.$uibModal.open({
+                templateUrl: '/ngApp/views/deletePost.html',
+                controller: MyApp.Controllers.DeletePostController,
+                controllerAs: 'controller',
+                resolve: {
+                    id: () => id,
+
+                },
+                size: 'md'
+            });
+
+        }
+
+        public editPostModal(id) {
+
+            this.$uibModal.open({
+                templateUrl: '/ngApp/views/editPost.html',
+                controller: MyApp.Controllers.EditPostController,
+                controllerAs: 'controller',
+                resolve: {
+                    id: () => id,
+
+                },
+                size: 'md'
+            });
+
+        }
+
     }
 
     export class DeleteDiscussionController {

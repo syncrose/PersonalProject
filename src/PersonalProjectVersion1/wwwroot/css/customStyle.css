@@ -2,10 +2,10 @@
     background-image: url(https://prod_membership_artifacts.s3.amazonaws.com/background/5838902-stars_001.jpg);
     /*background-image: url(https://s-media-cache-ak0.pinimg.com/originals/34/7c/0a/347c0ae41c1480fcc92fe3445b96bd81.jpg);*/
     background-size: cover;
-    color: white;
     background-repeat: no-repeat;
     padding-bottom: 275px;
     font-family: Crete Round;
+    color: white;
     /*margin: 0px;
     padding: 0px;
     border: 14px solid #808080;
@@ -13,9 +13,13 @@
 
 }
 
+.all
+
 .homeWrapper {
     color:black;
 }
+
+
 
 
 
@@ -376,15 +380,6 @@ h4 small {
 }
 
 
-
-wrapper {
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
-
 #wrapper.toggled {
     padding-left: 250px;
 }
@@ -412,6 +407,7 @@ wrapper {
     width: 100%;
     position: absolute;
     padding: 15px;
+    color:black;
 }
 
 #wrapper.toggled #page-content-wrapper {
@@ -501,4 +497,16 @@ wrapper {
     #messageTemplate {
         background-color: lightgray;
     }
+}
+
+.allModals {
+    color: black;
+    background-image: url(http://inspirationfeed.com/wp-content/uploads/2010/09/050491.jpg);
+     background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+
+.textarea {
+    background-color: lightblue;
 }

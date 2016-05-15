@@ -95,8 +95,8 @@
 
                                         </p>
                                         <p class="lead"><button class="btn btn-default">{{m.content}}</button></p>
-                                        <p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span><a href="/deletePost/{{post.id}}"><i class="glyphicon glyphicon-remove"></i> Delete</a></p>
-                                        <ul class="list-inline"><li><a href="#">{{post.timeCreated | date: 'MM/dd/yyyy'}}</a></li><li><a href="/discussion/post/{{post.id}}"><i class="glyphicon glyphicon-comment"></i> Comments</a></li><li><a href="/editPost/{{post.id}}"><i class="glyphicon glyphicon-comment"></i> Edit</a></li></ul>
+                                        <p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span><button class="btn btn-link" ng-click="controller.deletePostModal(post.id)"><i class="glyphicon glyphicon-remove"></i> Delete</button></p>
+                                        <ul class="list-inline"><li><a href="#">{{post.timeCreated | date: 'MM/dd/yyyy'}}</a></li><li><a href="/discussion/post/{{post.id}}"><i class="glyphicon glyphicon-comment"></i> Comments</a></li><li><button class="glyphicon glyphicon-link" ng-click="controller.editPostModal(post.id)"><i class="glyphicon glyphicon-comment"></i> Edit</button></li></ul>
                                     </div>
                                     <div class="col-xs-3"></div>
                                 </div>

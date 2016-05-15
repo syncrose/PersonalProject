@@ -375,8 +375,15 @@ var MyApp;
                 return this.userResource.query();
             };
             UserService.prototype.getUser = function (id) {
-                debugger;
                 return this.userResource.get({ id: id });
+            };
+            UserService.prototype.getUserContent = function (id) {
+                var userContentResource = this.$resource('/api/users/userPosts');
+                return userContentResource.query();
+            };
+            UserService.prototype.getUserMsgs = function (id) {
+                var userContentResource = this.$resource('/api/users/userMsgs');
+                return userContentResource.query();
             };
             UserService.prototype.updateUser = function (userToUpdate) {
                 return this.userResource.save(userToUpdate);
@@ -634,6 +641,28 @@ var MyApp;
                     size: 'md'
                 });
             };
+            DiscussionController.prototype.deletePostModal = function (id) {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/deletePost.html',
+                    controller: MyApp.Controllers.DeletePostController,
+                    controllerAs: 'controller',
+                    resolve: {
+                        id: function () { return id; },
+                    },
+                    size: 'md'
+                });
+            };
+            DiscussionController.prototype.editPostModal = function (id) {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/editPost.html',
+                    controller: MyApp.Controllers.EditPostController,
+                    controllerAs: 'controller',
+                    resolve: {
+                        id: function () { return id; },
+                    },
+                    size: 'md'
+                });
+            };
             return DiscussionController;
         }());
         Controllers.DiscussionController = DiscussionController;
@@ -765,28 +794,45 @@ var MyApp;
         }());
         Controllers.CreateMessageController = CreateMessageController;
         var EditMsgController = (function () {
-            function EditMsgController(messageService, $state, $stateParams) {
+            function EditMsgController(messageService, $state, $stateParams, $uibModalInstance, id) {
                 this.messageService = messageService;
                 this.$state = $state;
                 this.$stateParams = $stateParams;
+                this.$uibModalInstance = $uibModalInstance;
+                this.id = id;
                 this.postId = this.$stateParams['id'];
                 this.msgToEdit = this.messageService.getMessage(this.$stateParams['id']);
             }
+            EditMsgController.prototype.ok = function () {
+                this.$uibModalInstance.close();
+            };
+            EditMsgController.prototype.editMsg = function () {
+                var _this = this;
+                this.messageService.saveMsg(this.postId, this.msgToEdit).then(function () {
+                    _this.ok();
+                    _this.$state.reload();
+                });
+            };
             return EditMsgController;
         }());
         Controllers.EditMsgController = EditMsgController;
         var DeleteMsgController = (function () {
-            function DeleteMsgController(messageService, $stateParams, $state) {
+            function DeleteMsgController(messageService, $stateParams, $state, $uibModalInstance, id) {
                 this.messageService = messageService;
                 this.$stateParams = $stateParams;
                 this.$state = $state;
+                this.$uibModalInstance = $uibModalInstance;
+                this.id = id;
                 this.postId = this.$stateParams['id'];
             }
+            DeleteMsgController.prototype.ok = function () {
+                this.$uibModalInstance.close();
+            };
             DeleteMsgController.prototype.deleteMsg = function () {
                 var _this = this;
                 this.messageService.deleteMsg(this.$stateParams['id']).then(function () {
-                    debugger;
-                    _this.$state.go('messages', { id: _this.postId });
+                    _this.ok();
+                    _this.$state.reload();
                 });
             };
             DeleteMsgController.prototype.cancel = function () {
@@ -820,6 +866,28 @@ var MyApp;
                     size: 'md'
                 });
             };
+            PostController.prototype.deleteMsgModal = function (id) {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/deleteMsg.html',
+                    controller: MyApp.Controllers.DeleteMsgController,
+                    controllerAs: 'controller',
+                    resolve: {
+                        id: function () { return id; },
+                    },
+                    size: 'md'
+                });
+            };
+            PostController.prototype.editMsgModal = function (id) {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/editMsg.html',
+                    controller: MyApp.Controllers.EditMsgController,
+                    controllerAs: 'controller',
+                    resolve: {
+                        id: function () { return id; },
+                    },
+                    size: 'md'
+                });
+            };
             PostController.prototype.getPost = function () {
                 var postId = this.$stateParams['id'];
                 this.post = this.postsService.getPost(postId);
@@ -828,16 +896,22 @@ var MyApp;
         }());
         Controllers.PostController = PostController;
         var DeletePostController = (function () {
-            function DeletePostController(postsService, $stateParams, $state) {
+            function DeletePostController(postsService, $stateParams, $state, $uibModalInstance, id) {
                 this.postsService = postsService;
                 this.$stateParams = $stateParams;
                 this.$state = $state;
+                this.$uibModalInstance = $uibModalInstance;
+                this.id = id;
                 this.discId = this.$stateParams['id'];
             }
+            DeletePostController.prototype.ok = function () {
+                this.$uibModalInstance.close();
+            };
             DeletePostController.prototype.deletePost = function () {
                 var _this = this;
                 this.postsService.deletePost(this.$stateParams['id']).then(function () {
-                    _this.$state.go('discussions', { id: 8004 });
+                    _this.ok();
+                    _this.$state.reload();
                 });
             };
             DeletePostController.prototype.cancel = function () {
@@ -890,9 +964,14 @@ var MyApp;
                 this.filepickerService = filepickerService;
                 this.$scope = $scope;
                 this.getUser();
+                this.getUserPostMsg();
             }
+            UserController.prototype.getUserPostMsg = function () {
+                this.userName = this.accountService.getUserName();
+                this.posts = this.userService.getUserContent(this.userName);
+                this.msgs = this.userService.getUserMsgs(this.userName);
+            };
             UserController.prototype.getUser = function () {
-                debugger;
                 this.userId = this.$stateParams['id'];
                 this.user = this.userService.getUser(this.userId);
                 console.log(this.user);

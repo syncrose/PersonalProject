@@ -26,10 +26,10 @@
         <div class="container-fluid">
             <br>
             <div class="col-md-2 col-sm-3 text-center">
-                <a class="story-img" href="#"><img src="http://funnystack.com/wp-content/uploads/2014/04/Funny-Monkey-321.jpg" style="width:150px;height:150px" class="img-responsive"></a>
+                <a class="story-img" href="#"><img src="{{msg.msgImage}}" style="width:150px;height:150px" class="img-responsive"></a>
             </div>
             <div class="col-md-10 col-sm-9">
-                <h2>Going to be User</h2><hr />
+                <h2>{{msg.msgFirst}} {{msg.msgLast}}</h2><hr />
                 <div class="row">
                     <div class="col-xs-9">
                         <p id="overflowTest">
@@ -41,8 +41,8 @@
                     <div class="col-xs-3">
                         <ul class="list">
                             <li>{{msg.timeCreated | date: 'MM/dd/yyyy'}}</li>
-                            <li><a href="/deleteMsg/{{msg.id}}">Delete</a></li>
-                            <li><a href="/editMsg/{{msg.id}}">Edit</a></li>
+                            <li><button class="glyphicon glyphicon-link" ng-click="controller.deleteMsgModal(msg.id)">Delete</button></li>
+                            <li><button class="glyphicon glyphicon-link" ng-click="controller.editMsgModal(msg.id)">Edit</button></li>
                             <li>Something interesting</li>
 
 

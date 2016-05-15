@@ -35,16 +35,23 @@
 
         constructor(private messageService: MyApp.Services.MessageService,
             private $state: ng.ui.IStateService,
-            private $stateParams: ng.ui.IStateParamsService) {
+            private $stateParams: ng.ui.IStateParamsService,
+            private $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
+            private id        ) {
             this.postId = this.$stateParams['id'];
             this.msgToEdit = this.messageService.getMessage(this.$stateParams['id']);
         }
 
-        //editMsg() {
-        //    this.messageService.saveMsg(this.postId, this.msgToEdit).then(() => {
-        //        this.$state.go("messages", { id: this.postId });
-        //    });
-        //}
+        public ok() {
+            this.$uibModalInstance.close();
+        }
+
+        editMsg() {
+            this.messageService.saveMsg(this.postId, this.msgToEdit).then(() => {
+                this.ok();
+                this.$state.reload();
+            });
+        }
     }
 
 
@@ -55,14 +62,20 @@
         constructor(
             private messageService: MyApp.Services.MessageService,
             private $stateParams: ng.ui.IStateParamsService,
-            private $state: ng.ui.IStateService) {
+            private $state: ng.ui.IStateService,
+            private $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
+            private id          ) {
             this.postId = this.$stateParams['id'];
+        }
+
+        public ok() {
+            this.$uibModalInstance.close();
         }
 
         deleteMsg() {
             this.messageService.deleteMsg(this.$stateParams['id']).then(() => {
-                debugger;
-                this.$state.go('messages', { id: this.postId });
+                this.ok();
+                this.$state.reload();
             });
 
         }

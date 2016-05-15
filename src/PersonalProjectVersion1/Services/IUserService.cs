@@ -9,6 +9,8 @@ namespace PersonalProjectVersion1.Services
     {
         UserVM getUser(string id);
         List<ApplicationUser> getUsers();
+        List<Post> getUserPosts(string userName);
+        List<Message> getUserMessages(string userName);
         void UpdateUser(UserVM user);
     }
 }

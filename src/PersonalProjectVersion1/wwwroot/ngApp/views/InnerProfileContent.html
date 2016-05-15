@@ -2,13 +2,13 @@
     <h1>Profile Content</h1><hr />
     <h1>{{controller.user.first}} {{controller.user.last}}</h1>
 
-    <div ng-repeat="post in user.userPosts">
+    <div ng-repeat="post in controller.posts">
     <h2>Posts</h2>
         <h2>{{post.title}}</h2>
         <h3>{{post.content}}</h3>
     </div>
 
-    <div ng-repeat="msg in user.userMessages">
+    <div ng-repeat="msg in controller.msgs">
         <h2>Messages</h2>
         <h3>{{msg.content}}</h3>
     </div>

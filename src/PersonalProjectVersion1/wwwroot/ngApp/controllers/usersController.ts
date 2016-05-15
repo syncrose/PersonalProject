@@ -10,13 +10,14 @@
 
     export class UserController {
         public user;
-        public msg;
-        public post;
+        public msgs;
+        public posts;
         public file;
         public image;
         public discId;
         public postId;
         public userId;
+        public userName;
 
         constructor(
             private userService: MyApp.Services.UserService,
@@ -31,10 +32,17 @@
         ) {
         
             this.getUser();
+            this.getUserPostMsg();
+        }
+
+        getUserPostMsg() {
+            this.userName = this.accountService.getUserName();
+            this.posts = this.userService.getUserContent(this.userName);
+            this.msgs = this.userService.getUserMsgs(this.userName);
+
         }
 
         public getUser() {
-        debugger
             this.userId = this.$stateParams['id'];
             this.user = this.userService.getUser(this.userId);
             console.log(this.user);

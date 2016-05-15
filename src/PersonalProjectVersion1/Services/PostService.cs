@@ -27,7 +27,7 @@ namespace PersonalProjectVersion1.Services
 
         public Post getPost(int Id)
         {
-            var data = _repo.Query<Post>().Where(p => p.Id == Id).Include(p => p.LinkedMessages.OrderBy(t => t.TimeCreated)).FirstOrDefault();
+            var data = _repo.Query<Post>().Where(p => p.Id == Id).Include(p => p.LinkedMessages).FirstOrDefault();
             return data;
         }
 

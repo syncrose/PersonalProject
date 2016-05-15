@@ -12,8 +12,17 @@
         }
 
         public getUser(id) {
-            debugger;
             return this.userResource.get({ id: id });
+        }
+
+        public getUserContent(id) {
+            let userContentResource = this.$resource('/api/users/userPosts');
+            return userContentResource.query();
+        }
+
+        public getUserMsgs(id) {
+            let userContentResource = this.$resource('/api/users/userMsgs');
+            return userContentResource.query();
         }
 
         public updateUser(userToUpdate) {

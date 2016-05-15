@@ -1,17 +1,22 @@
-﻿<h1>Remove Message?</h1>
-
-<div class="row">
-    <div class="col-md-12 col-md-offset-4">
-
-        <h1>Are you sure you want to delete?</h1>
+﻿<div class="allModals">
+    <div class="modal-header text-center">
+        <h1>Remove Message?</h1>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modal-body text-center">
+                <h1>Are you sure you want to delete?</h1>
+            </div>
+        </div>
 
-</div>
-<div class="row">
+    </div>
+    <div class="row">
 
-    <div class="col-md-12 col-md-offset-4">
-        <input type="button" value="YES" ng-click="controller.deleteMsg()" class="btn btn-danger" />
-        <input type="button" value="NO" ng-click="controller.cancel()" class="btn btn-success" />
-
+        <div class="col-md-12">
+            <div class="modal-footer text-center">
+                <input type="button" value="YES" ng-click="controller.deleteMsg()" class="btn btn-danger" />
+                <input type="button" value="NO" ng-click="controller.cancel()" class="btn btn-success" />
+            </div>
+        </div>
     </div>
 </div>
