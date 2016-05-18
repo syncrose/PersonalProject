@@ -111,7 +111,7 @@ namespace MyApp {
                 views: {
                     'innerProfile': {
                         templateUrl: '/ngApp/views/InnerProfileContent.html',
-                        controller: MyApp.Controllers.UserController,
+                        controller: MyApp.Controllers.InnerProfileController,
                         controllerAs: 'controller'
                     },
                     'events': {

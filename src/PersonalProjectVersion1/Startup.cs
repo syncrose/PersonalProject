@@ -13,6 +13,8 @@ using PersonalProjectVersion1.Models;
 using PersonalProjectVersion1.Services;
 using Newtonsoft.Json.Serialization;
 using PersonalProjectVersion1.Repository;
+using AutoMapper;
+using PersonalProjectVersion1.Infrastructure;
 
 namespace PersonalProjectVersion1
 {
@@ -41,6 +43,12 @@ namespace PersonalProjectVersion1
         public void ConfigureServices(IServiceCollection services)
         {
 
+            //Configure auto mapper
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile(new AutoMapperProfile());
+            });
+            services.AddSingleton<IMapper>(sp => config.CreateMapper());
+
             services.AddAuthorization(options => {
                 options.AddPolicy("AdminOnly", policy => policy.RequireClaim("IsAdmin"));
             });
@@ -50,6 +58,7 @@ namespace PersonalProjectVersion1
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IMsgService, MsgService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMeetupApiService, MeetupApiService>();
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<ApplicationDbContext>(options =>

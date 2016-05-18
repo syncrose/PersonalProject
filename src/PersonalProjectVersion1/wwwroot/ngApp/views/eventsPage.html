@@ -1,44 +1,15 @@
-﻿<h1>EVENTS PAGE</h1>
-<div class="container-fluid">
-    <!--<iframe id="calendar" src="https://commingly.com/syncrose/events/calendar/" frameborder="0" allowTransparency="true" width="725" height="475"></iframe>-->
-</div>
-
-<div class="container-fluid">
-    <h1>Create an Event list</h1>
-
-    <h1>Interest and related event</h1>
+﻿<div ng-repeat="user in controller.user">
+    <h1>Profile Content</h1><hr />
     <h1>{{controller.user.first}} {{controller.user.last}}</h1>
-    <h1>DATE AND TIME</h1>
 
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
+    <div ng-repeat="post in controller.posts">
+        <h2>Posts</h2>
+        <h2>{{post.title}}</h2>
+        <h3>{{post.content}}</h3>
+    </div>
 
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-    <h1>!!MAYBE!! Add this event to your calendar</h1>
-
-
-
-
-
+    <div ng-repeat="msg in controller.msgs">
+        <h2>Messages</h2>
+        <h3>{{msg.content}}</h3>
+    </div>
 </div>

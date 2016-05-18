@@ -105,7 +105,7 @@ var MyApp;
             views: {
                 'innerProfile': {
                     templateUrl: '/ngApp/views/InnerProfileContent.html',
-                    controller: MyApp.Controllers.UserController,
+                    controller: MyApp.Controllers.InnerProfileController,
                     controllerAs: 'controller'
                 },
                 'events': {
@@ -145,255 +145,6 @@ var MyApp;
     });
 })(MyApp || (MyApp = {}));
 /// <reference path="ngapp/app.ts" />
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var AccountService = (function () {
-            function AccountService($q, $http, $window) {
-                this.$q = $q;
-                this.$http = $http;
-                this.$window = $window;
-                // in case we are redirected from a social provider
-                // we need to check if we are authenticated.
-                this.checkAuthentication();
-            }
-            // Store access token and claims in browser session storage
-            AccountService.prototype.storeUserInfo = function (userInfo) {
-                // store user name
-                this.$window.sessionStorage.setItem('userName', userInfo.userName);
-                // store claims
-                this.$window.sessionStorage.setItem('claims', JSON.stringify(userInfo.claims));
-                this.$window.sessionStorage.setItem('id', userInfo.userId);
-            };
-            AccountService.prototype.getUserName = function () {
-                return this.$window.sessionStorage.getItem('userName');
-            };
-            AccountService.prototype.getUserId = function () {
-                return this.$window.sessionStorage.getItem('id');
-            };
-            AccountService.prototype.getClaim = function (type) {
-                var allClaims = JSON.parse(this.$window.sessionStorage.getItem('claims'));
-                return allClaims ? allClaims[type] : null;
-            };
-            AccountService.prototype.login = function (loginUser) {
-                var _this = this;
-                return this.$q(function (resolve, reject) {
-                    _this.$http.post('/api/account/login', loginUser).then(function (result) {
-                        _this.storeUserInfo(result.data);
-                        resolve();
-                    }).catch(function (result) {
-                        var messages = _this.flattenValidation(result.data);
-                        reject(messages);
-                    });
-                });
-            };
-            AccountService.prototype.register = function (userLogin) {
-                var _this = this;
-                return this.$q(function (resolve, reject) {
-                    _this.$http.post('/api/account/register', userLogin)
-                        .then(function (result) {
-                        _this.storeUserInfo(result.data);
-                        resolve(result);
-                    })
-                        .catch(function (result) {
-                        var messages = _this.flattenValidation(result.data);
-                        reject(messages);
-                    });
-                });
-            };
-            AccountService.prototype.logout = function () {
-                // clear all of session storage (including claims)
-                this.$window.sessionStorage.clear();
-                // logout on the server
-                return this.$http.post('/api/account/logout', null);
-            };
-            AccountService.prototype.isLoggedIn = function () {
-                return this.$window.sessionStorage.getItem('userName');
-            };
-            // associate external login (e.g., Twitter) with local user account
-            AccountService.prototype.registerExternal = function (email) {
-                var _this = this;
-                return this.$q(function (resolve, reject) {
-                    _this.$http.post('/api/account/externalLoginConfirmation', { email: email })
-                        .then(function (result) {
-                        _this.storeUserInfo(result.data);
-                        resolve(result);
-                    })
-                        .catch(function (result) {
-                        // flatten error messages
-                        var messages = _this.flattenValidation(result.data);
-                        reject(messages);
-                    });
-                });
-            };
-            AccountService.prototype.getExternalLogins = function () {
-                var _this = this;
-                return this.$q(function (resolve, reject) {
-                    var url = "api/Account/getExternalLogins?returnUrl=%2FexternalLogin&generateState=true";
-                    _this.$http.get(url).then(function (result) {
-                        resolve(result.data);
-                    }).catch(function (result) {
-                        reject(result);
-                    });
-                });
-            };
-            // checks whether the current user is authenticated on the server and returns user info
-            AccountService.prototype.checkAuthentication = function () {
-                var _this = this;
-                this.$http.get('/api/account/checkAuthentication')
-                    .then(function (result) {
-                    if (result.data) {
-                        _this.storeUserInfo(result.data);
-                    }
-                });
-            };
-            AccountService.prototype.confirmEmail = function (userId, code) {
-                var _this = this;
-                return this.$q(function (resolve, reject) {
-                    var data = {
-                        userId: userId,
-                        code: code
-                    };
-                    _this.$http.post('/api/account/confirmEmail', data).then(function (result) {
-                        resolve(result.data);
-                    }).catch(function (result) {
-                        reject(result);
-                    });
-                });
-            };
-            // extract access token from response
-            AccountService.prototype.parseOAuthResponse = function (token) {
-                var results = {};
-                token.split('&').forEach(function (item) {
-                    var pair = item.split('=');
-                    results[pair[0]] = pair[1];
-                });
-                return results;
-            };
-            AccountService.prototype.flattenValidation = function (modelState) {
-                var messages = [];
-                for (var prop in modelState) {
-                    messages = messages.concat(modelState[prop]);
-                }
-                return messages;
-            };
-            return AccountService;
-        }());
-        Services.AccountService = AccountService;
-        angular.module('MyApp').service('accountService', AccountService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var DiscussionService = (function () {
-            function DiscussionService($resource) {
-                this.$resource = $resource;
-                this.discussionResource = this.$resource("/api/discussions/:id");
-            }
-            DiscussionService.prototype.getDiscussions = function () {
-                return this.discussionResource.query();
-            };
-            DiscussionService.prototype.getDiscussion = function (id) {
-                return this.discussionResource.get({ id: id });
-            };
-            DiscussionService.prototype.saveDiscussion = function (discToSave) {
-                debugger;
-                return this.discussionResource.save(discToSave).$promise;
-            };
-            DiscussionService.prototype.deleteDiscussion = function (id) {
-                return this.discussionResource.delete({ id: id }).$promise;
-            };
-            return DiscussionService;
-        }());
-        Services.DiscussionService = DiscussionService;
-        angular.module("MyApp").service("discussionService", DiscussionService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var MessageService = (function () {
-            function MessageService($resource) {
-                this.$resource = $resource;
-                this.msgResource = this.$resource("/api/msgs/:id");
-            }
-            MessageService.prototype.getMessage = function (id) {
-                return this.msgResource.get({ id: id });
-            };
-            MessageService.prototype.saveMsg = function (id, msgToCreate) {
-                debugger;
-                return this.msgResource.save({ id: id }, msgToCreate).$promise;
-            };
-            MessageService.prototype.deleteMsg = function (id) {
-                return this.msgResource.delete({ id: id }).$promise;
-            };
-            return MessageService;
-        }());
-        Services.MessageService = MessageService;
-        angular.module("MyApp").service("messageService", MessageService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var PostsService = (function () {
-            function PostsService($resource) {
-                this.$resource = $resource;
-                this.postsResource = this.$resource("/api/posts/:id");
-            }
-            PostsService.prototype.getPost = function (id) {
-                return this.postsResource.get({ id: id });
-            };
-            PostsService.prototype.savePost = function (id, postToSave) {
-                debugger;
-                return this.postsResource.save({ id: id }, postToSave).$promise;
-            };
-            PostsService.prototype.deletePost = function (id) {
-                return this.postsResource.delete({ id: id }).$promise;
-            };
-            return PostsService;
-        }());
-        Services.PostsService = PostsService;
-        angular.module("MyApp").service("postsService", PostsService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var UserService = (function () {
-            function UserService($resource) {
-                this.$resource = $resource;
-                this.userResource = this.$resource("/api/users/:id");
-            }
-            UserService.prototype.getUsers = function () {
-                return this.userResource.query();
-            };
-            UserService.prototype.getUser = function (id) {
-                return this.userResource.get({ id: id });
-            };
-            UserService.prototype.getUserContent = function (id) {
-                var userContentResource = this.$resource('/api/users/userPosts');
-                return userContentResource.query();
-            };
-            UserService.prototype.getUserMsgs = function (id) {
-                var userContentResource = this.$resource('/api/users/userMsgs');
-                return userContentResource.query();
-            };
-            UserService.prototype.updateUser = function (userToUpdate) {
-                return this.userResource.save(userToUpdate);
-            };
-            return UserService;
-        }());
-        Services.UserService = UserService;
-        angular.module("MyApp").service("userService", UserService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
 var MyApp;
 (function (MyApp) {
     var Controllers;
@@ -927,8 +678,14 @@ var MyApp;
     var Controllers;
     (function (Controllers) {
         var InnerProfileController = (function () {
-            function InnerProfileController() {
+            function InnerProfileController(meetupService) {
+                this.meetupService = meetupService;
             }
+            InnerProfileController.prototype.getMeetups = function () {
+                debugger;
+                this.meetups = this.meetupService.getMeetups(this.zip);
+                console.log(this.meetups);
+            };
             return InnerProfileController;
         }());
         Controllers.InnerProfileController = InnerProfileController;
@@ -1007,5 +764,275 @@ var MyApp;
         }());
         Controllers.EditUserController = EditUserController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var AccountService = (function () {
+            function AccountService($q, $http, $window) {
+                this.$q = $q;
+                this.$http = $http;
+                this.$window = $window;
+                // in case we are redirected from a social provider
+                // we need to check if we are authenticated.
+                this.checkAuthentication();
+            }
+            // Store access token and claims in browser session storage
+            AccountService.prototype.storeUserInfo = function (userInfo) {
+                // store user name
+                this.$window.sessionStorage.setItem('userName', userInfo.userName);
+                // store claims
+                this.$window.sessionStorage.setItem('claims', JSON.stringify(userInfo.claims));
+                this.$window.sessionStorage.setItem('id', userInfo.userId);
+            };
+            AccountService.prototype.getUserName = function () {
+                return this.$window.sessionStorage.getItem('userName');
+            };
+            AccountService.prototype.getUserId = function () {
+                return this.$window.sessionStorage.getItem('id');
+            };
+            AccountService.prototype.getClaim = function (type) {
+                var allClaims = JSON.parse(this.$window.sessionStorage.getItem('claims'));
+                return allClaims ? allClaims[type] : null;
+            };
+            AccountService.prototype.login = function (loginUser) {
+                var _this = this;
+                return this.$q(function (resolve, reject) {
+                    _this.$http.post('/api/account/login', loginUser).then(function (result) {
+                        _this.storeUserInfo(result.data);
+                        resolve();
+                    }).catch(function (result) {
+                        var messages = _this.flattenValidation(result.data);
+                        reject(messages);
+                    });
+                });
+            };
+            AccountService.prototype.register = function (userLogin) {
+                var _this = this;
+                return this.$q(function (resolve, reject) {
+                    _this.$http.post('/api/account/register', userLogin)
+                        .then(function (result) {
+                        _this.storeUserInfo(result.data);
+                        resolve(result);
+                    })
+                        .catch(function (result) {
+                        var messages = _this.flattenValidation(result.data);
+                        reject(messages);
+                    });
+                });
+            };
+            AccountService.prototype.logout = function () {
+                // clear all of session storage (including claims)
+                this.$window.sessionStorage.clear();
+                // logout on the server
+                return this.$http.post('/api/account/logout', null);
+            };
+            AccountService.prototype.isLoggedIn = function () {
+                return this.$window.sessionStorage.getItem('userName');
+            };
+            // associate external login (e.g., Twitter) with local user account
+            AccountService.prototype.registerExternal = function (email) {
+                var _this = this;
+                return this.$q(function (resolve, reject) {
+                    _this.$http.post('/api/account/externalLoginConfirmation', { email: email })
+                        .then(function (result) {
+                        _this.storeUserInfo(result.data);
+                        resolve(result);
+                    })
+                        .catch(function (result) {
+                        // flatten error messages
+                        var messages = _this.flattenValidation(result.data);
+                        reject(messages);
+                    });
+                });
+            };
+            AccountService.prototype.getExternalLogins = function () {
+                var _this = this;
+                return this.$q(function (resolve, reject) {
+                    var url = "api/Account/getExternalLogins?returnUrl=%2FexternalLogin&generateState=true";
+                    _this.$http.get(url).then(function (result) {
+                        resolve(result.data);
+                    }).catch(function (result) {
+                        reject(result);
+                    });
+                });
+            };
+            // checks whether the current user is authenticated on the server and returns user info
+            AccountService.prototype.checkAuthentication = function () {
+                var _this = this;
+                this.$http.get('/api/account/checkAuthentication')
+                    .then(function (result) {
+                    if (result.data) {
+                        _this.storeUserInfo(result.data);
+                    }
+                });
+            };
+            AccountService.prototype.confirmEmail = function (userId, code) {
+                var _this = this;
+                return this.$q(function (resolve, reject) {
+                    var data = {
+                        userId: userId,
+                        code: code
+                    };
+                    _this.$http.post('/api/account/confirmEmail', data).then(function (result) {
+                        resolve(result.data);
+                    }).catch(function (result) {
+                        reject(result);
+                    });
+                });
+            };
+            // extract access token from response
+            AccountService.prototype.parseOAuthResponse = function (token) {
+                var results = {};
+                token.split('&').forEach(function (item) {
+                    var pair = item.split('=');
+                    results[pair[0]] = pair[1];
+                });
+                return results;
+            };
+            AccountService.prototype.flattenValidation = function (modelState) {
+                var messages = [];
+                for (var prop in modelState) {
+                    messages = messages.concat(modelState[prop]);
+                }
+                return messages;
+            };
+            return AccountService;
+        }());
+        Services.AccountService = AccountService;
+        angular.module('MyApp').service('accountService', AccountService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var DiscussionService = (function () {
+            function DiscussionService($resource) {
+                this.$resource = $resource;
+                this.discussionResource = this.$resource("/api/discussions/:id");
+            }
+            DiscussionService.prototype.getDiscussions = function () {
+                return this.discussionResource.query();
+            };
+            DiscussionService.prototype.getDiscussion = function (id) {
+                return this.discussionResource.get({ id: id });
+            };
+            DiscussionService.prototype.saveDiscussion = function (discToSave) {
+                debugger;
+                return this.discussionResource.save(discToSave).$promise;
+            };
+            DiscussionService.prototype.deleteDiscussion = function (id) {
+                return this.discussionResource.delete({ id: id }).$promise;
+            };
+            return DiscussionService;
+        }());
+        Services.DiscussionService = DiscussionService;
+        angular.module("MyApp").service("discussionService", DiscussionService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var MeetupService = (function () {
+            function MeetupService($resource) {
+                this.$resource = $resource;
+                this.meetupResource = this.$resource("/api/meetupApi/:id");
+            }
+            MeetupService.prototype.getMeetups = function (zip) {
+                debugger;
+                return this.meetupResource.get({
+                    id: zip
+                });
+            };
+            return MeetupService;
+        }());
+        Services.MeetupService = MeetupService;
+        angular.module("MyApp").service('meetupService', MeetupService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var MessageService = (function () {
+            function MessageService($resource) {
+                this.$resource = $resource;
+                this.msgResource = this.$resource("/api/msgs/:id");
+            }
+            MessageService.prototype.getMessage = function (id) {
+                return this.msgResource.get({ id: id });
+            };
+            MessageService.prototype.saveMsg = function (id, msgToCreate) {
+                debugger;
+                return this.msgResource.save({ id: id }, msgToCreate).$promise;
+            };
+            MessageService.prototype.deleteMsg = function (id) {
+                return this.msgResource.delete({ id: id }).$promise;
+            };
+            return MessageService;
+        }());
+        Services.MessageService = MessageService;
+        angular.module("MyApp").service("messageService", MessageService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var PostsService = (function () {
+            function PostsService($resource) {
+                this.$resource = $resource;
+                this.postsResource = this.$resource("/api/posts/:id");
+            }
+            PostsService.prototype.getPost = function (id) {
+                return this.postsResource.get({ id: id });
+            };
+            PostsService.prototype.savePost = function (id, postToSave) {
+                debugger;
+                return this.postsResource.save({ id: id }, postToSave).$promise;
+            };
+            PostsService.prototype.deletePost = function (id) {
+                return this.postsResource.delete({ id: id }).$promise;
+            };
+            return PostsService;
+        }());
+        Services.PostsService = PostsService;
+        angular.module("MyApp").service("postsService", PostsService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var UserService = (function () {
+            function UserService($resource) {
+                this.$resource = $resource;
+                this.userResource = this.$resource("/api/users/:id");
+            }
+            UserService.prototype.getUsers = function () {
+                return this.userResource.query();
+            };
+            UserService.prototype.getUser = function (id) {
+                return this.userResource.get({ id: id });
+            };
+            UserService.prototype.getUserContent = function (id) {
+                var userContentResource = this.$resource('/api/users/userPosts');
+                return userContentResource.query();
+            };
+            UserService.prototype.getUserMsgs = function (id) {
+                var userContentResource = this.$resource('/api/users/userMsgs');
+                return userContentResource.query();
+            };
+            UserService.prototype.updateUser = function (userToUpdate) {
+                return this.userResource.save(userToUpdate);
+            };
+            return UserService;
+        }());
+        Services.UserService = UserService;
+        angular.module("MyApp").service("userService", UserService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
 })(MyApp || (MyApp = {}));
 //# sourceMappingURL=all.js.map
