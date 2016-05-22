@@ -18,6 +18,14 @@
         public postId;
         public userId;
         public userName;
+        public currentPostPage = 1;
+        public currentMsgPage = 1;
+        public totalPosts;
+        public totalMsgs;
+        public itemsPerPage = 10;
+        public UserPostPage;
+        public userMsgPage;
+
 
         constructor(
             private userService: MyApp.Services.UserService,
@@ -30,16 +38,38 @@
             private filepickerService: any,
             private $scope: ng.IScope
         ) {
-        
+            this.totalMsgs = 0;
+            this.totalPosts = 0;
+
             this.getUser();
-            this.getUserPostMsg();
+            this.getUserPosts();
+            this.getUserMsgs();
+
         }
 
-        getUserPostMsg() {
+        getUserPosts() {
+            debugger;
             this.userName = this.accountService.getUserName();
-            this.posts = this.userService.getUserContent(this.userName);
-            this.msgs = this.userService.getUserMsgs(this.userName);
 
+            this.userService.getTotalPosts(this.userName).then((posts) => {
+                this.totalPosts = posts.length;
+            });
+            this.UserPostPage = this.userName + " " + this.currentPostPage;
+            this.userService.getUserContent(this.UserPostPage).then((posts) => {
+                this.posts = posts;
+            });
+        }
+
+        getUserMsgs() {
+            debugger;
+            this.userName = this.accountService.getUserName();
+            this.userService.getTotalMsgs(this.userName).then((msgs) => {
+                this.totalMsgs = msgs.length;
+            });
+            this.userMsgPage = this.userName + " " + this.currentMsgPage;
+            this.userService.getUserMsgs(this.userMsgPage).then((msgs) => {
+                this.msgs = msgs;
+            });
         }
 
         public getUser() {

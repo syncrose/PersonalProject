@@ -21,25 +21,7 @@ namespace PersonalProjectVersion1.Services
         public List<ApplicationUser> getUsers()
         {
             var users = _repo.Query<ApplicationUser>().Include(u => u.UserPosts).Include(u => u.UserMessages).ToList();
-            
-            //var usersVM = new List<UserVM>();
-            //foreach(var user in users)
-            //{
-            //    usersVM.Add(
-            //        new UserVM
-            //        {
-            //            Email = user.Email,
-            //            UserMessages = user.UserMessages,
-                        
-            //            UserPosts = user.UserPosts,
-            //            First = user.First,
-            //            Last = user.Last,
-            //            UserName = user.UserName,
-            //            Image = user.Image
-
-            //        });
-            //}
-
+       
             return users;
             
         }
@@ -61,15 +43,15 @@ namespace PersonalProjectVersion1.Services
             return vm;
         }
 
-        public List<Post> getUserPosts(string userName)
+        public List<Post> getUserPosts(string userName, int page)
         {
-            var posts = _repo.Query<Post>().Where(u => u.PostUserName == userName).ToList();
+            var posts = _repo.Query<Post>().Where(u => u.PostUserName == userName).Skip(10 * (page - 1)).Take(10).ToList();
             return posts;
         }
 
-        public List<Message> getUserMessages(string userName)
+        public List<Message> getUserMessages(string userName, int page)
         {
-            var messages = _repo.Query<Message>().Where(u => u.MsgUserName == userName).ToList();
+            var messages = _repo.Query<Message>().Where(u => u.MsgUserName == userName).Skip(10 * (page - 1)).Take(10).ToList();
             return messages;
         }
 
@@ -82,6 +64,18 @@ namespace PersonalProjectVersion1.Services
             originUser.Image = user.Image;
             originUser.UserName = user.UserName;
             _repo.SaveChanges();
+        }
+
+        public List<Post> getUserPostsCount(string userName)
+        {
+            var posts = _repo.Query<Post>().Where(u => u.PostUserName == userName).ToList();
+            return posts;
+        }
+
+        public List<Message> getUserMessagesCount(string userName)
+        {
+            var messages = _repo.Query<Message>().Where(u => u.MsgUserName == userName).ToList();
+            return messages;
         }
 
     }

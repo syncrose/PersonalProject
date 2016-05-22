@@ -6,6 +6,7 @@
 
         constructor(
             private meetupService: MyApp.Services.MeetupService
+           
         ) {
 
         }
@@ -15,6 +16,7 @@
             this.meetups = this.meetupService.getMeetups(this.zip);
            
             console.log(this.meetups);
+            
         }
 
 

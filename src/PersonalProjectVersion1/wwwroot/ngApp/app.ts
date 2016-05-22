@@ -1,6 +1,6 @@
 namespace MyApp {
 
-    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap', 'angular-filepicker']).config((
+    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap', 'angular-filepicker', 'ngSanitize']).config((
         $stateProvider: ng.ui.IStateProvider,
         $urlRouterProvider: ng.ui.IUrlRouterProvider,
         $locationProvider: ng.ILocationProvider,
@@ -115,7 +115,7 @@ namespace MyApp {
                         controllerAs: 'controller'
                     },
                     'events': {
-                        templateUrl: '/ngApp/views/eventsPage.html',
+                        templateUrl: '/ngApp/views/userPostsMsgs.html',
                         controller: MyApp.Controllers.UserController,
                         controllerAs: 'controller'
                     }

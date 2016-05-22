@@ -36,18 +36,51 @@ namespace PersonalProjectVersion1.API
 
         [HttpGet]
         [Route("userPosts")]
-        public IActionResult getUserPosts(string userName)
+        public IActionResult getUserPosts(string userPage)
         {
-            var userPosts = _repo.getUserPosts(userName);
-            return Ok(userPosts);
+            if (userPage != null)
+            {
+                var data = userPage.Split(' ');
+                var userName = data[0];
+                var page = int.Parse(data[1]);
+                var userPosts = _repo.getUserPosts(userName, page);
+                return Ok(userPosts);
+            }
+            else
+            {
+                 return HttpBadRequest();
+            }
         }
 
         [HttpGet]
         [Route("userMsgs")]
-        public IActionResult getUserMsgs(string userName)
+        public IActionResult getUserMsgs(string userPage)
         {
-            var userMsgs = _repo.getUserMessages(userName);
+            if(userPage != null) { 
+            var data = userPage.Split(' ');
+            var userName = data[0];
+            var page = int.Parse(data[1]);
+            var userMsgs = _repo.getUserMessages(userName, page);
             return Ok(userMsgs);
+            }
+            else
+            {
+                return HttpBadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("totalPosts")]
+        public IActionResult getAllPosts(string userName)
+        {
+            return Ok(_repo.getUserPostsCount(userName));
+        }
+
+        [HttpGet]
+        [Route("totalMsgs")]
+        public IActionResult getAllMsgs(string userName)
+        {
+            return Ok(_repo.getUserMessagesCount(userName));
         }
 
         // POST api/values

@@ -45,6 +45,11 @@
     position: center;
 }
 
-.p lead {
-    font-size: 8px;
+#msgMain {
+    background-color: dodgerblue;
+
+}
+
+#messageTemplate {
+    background-color: darkslategray;
 }

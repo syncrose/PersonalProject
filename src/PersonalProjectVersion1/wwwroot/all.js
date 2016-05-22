@@ -1,6 +1,6 @@
 var MyApp;
 (function (MyApp) {
-    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap', 'angular-filepicker']).config(function ($stateProvider, $urlRouterProvider, $locationProvider, filepickerProvider) {
+    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap', 'angular-filepicker', 'ngSanitize']).config(function ($stateProvider, $urlRouterProvider, $locationProvider, filepickerProvider) {
         filepickerProvider.setKey('Ay0qe4wR6efe0Ua2XZC5wz');
         // Define routes
         $stateProvider
@@ -109,7 +109,7 @@ var MyApp;
                     controllerAs: 'controller'
                 },
                 'events': {
-                    templateUrl: '/ngApp/views/eventsPage.html',
+                    templateUrl: '/ngApp/views/userPostsMsgs.html',
                     controller: MyApp.Controllers.UserController,
                     controllerAs: 'controller'
                 }
@@ -720,13 +720,38 @@ var MyApp;
                 this.$uibModal = $uibModal;
                 this.filepickerService = filepickerService;
                 this.$scope = $scope;
+                this.currentPostPage = 1;
+                this.currentMsgPage = 1;
+                this.itemsPerPage = 10;
+                this.totalMsgs = 0;
+                this.totalPosts = 0;
                 this.getUser();
-                this.getUserPostMsg();
+                this.getUserPosts();
+                this.getUserMsgs();
             }
-            UserController.prototype.getUserPostMsg = function () {
+            UserController.prototype.getUserPosts = function () {
+                var _this = this;
+                debugger;
                 this.userName = this.accountService.getUserName();
-                this.posts = this.userService.getUserContent(this.userName);
-                this.msgs = this.userService.getUserMsgs(this.userName);
+                this.userService.getTotalPosts(this.userName).then(function (posts) {
+                    _this.totalPosts = posts.length;
+                });
+                this.UserPostPage = this.userName + " " + this.currentPostPage;
+                this.userService.getUserContent(this.UserPostPage).then(function (posts) {
+                    _this.posts = posts;
+                });
+            };
+            UserController.prototype.getUserMsgs = function () {
+                var _this = this;
+                debugger;
+                this.userName = this.accountService.getUserName();
+                this.userService.getTotalMsgs(this.userName).then(function (msgs) {
+                    _this.totalMsgs = msgs.length;
+                });
+                this.userMsgPage = this.userName + " " + this.currentMsgPage;
+                this.userService.getUserMsgs(this.userMsgPage).then(function (msgs) {
+                    _this.msgs = msgs;
+                });
             };
             UserController.prototype.getUser = function () {
                 this.userId = this.$stateParams['id'];
@@ -1018,13 +1043,25 @@ var MyApp;
             UserService.prototype.getUser = function (id) {
                 return this.userResource.get({ id: id });
             };
-            UserService.prototype.getUserContent = function (id) {
+            UserService.prototype.getUserContent = function (userPostPage) {
+                debugger;
                 var userContentResource = this.$resource('/api/users/userPosts');
-                return userContentResource.query();
+                return userContentResource.query({ userPage: userPostPage }).$promise;
             };
-            UserService.prototype.getUserMsgs = function (id) {
+            UserService.prototype.getUserMsgs = function (userMsgPage) {
+                debugger;
                 var userContentResource = this.$resource('/api/users/userMsgs');
-                return userContentResource.query();
+                return userContentResource.query({ userPage: userMsgPage }).$promise;
+            };
+            UserService.prototype.getTotalMsgs = function (id) {
+                debugger;
+                var msgResource = this.$resource('/api/users/totalMsgs');
+                return msgResource.query().$promise;
+            };
+            UserService.prototype.getTotalPosts = function (id) {
+                debugger;
+                var postResource = this.$resource('/api/users/totalPosts');
+                return postResource.query().$promise;
             };
             UserService.prototype.updateUser = function (userToUpdate) {
                 return this.userResource.save(userToUpdate);
